@@ -6,7 +6,9 @@ Uses the service_role key server-side only; never exposed to users.
 import logging
 import os
 import random
+import threading
 from datetime import date
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -352,7 +354,31 @@ async def on_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.answer("Saved to favorites ⭐", show_alert=False)
 
 
+def start_health_server():
+    """Render's free tier is Web Services only (no free background workers),
+    which requires binding to $PORT and responding to health checks. This
+    runs in a daemon thread alongside the polling loop; harmless locally
+    where PORT isn't set."""
+    port = os.environ.get("PORT")
+    if not port:
+        return
+
+    class Health(BaseHTTPRequestHandler):
+        def do_GET(self):
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"ok")
+
+        def log_message(self, *args):
+            pass  # keep the bot's own logging clean
+
+    server = HTTPServer(("0.0.0.0", int(port)), Health)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    log.info(f"Health check server listening on :{port}")
+
+
 def main():
+    start_health_server()
     app = (
         Application.builder()
         .token(TELEGRAM_BOT_TOKEN)
