@@ -1,0 +1,70 @@
+---
+pagination:
+  data: entries
+  size: 1
+  alias: e
+permalink: "/entry/{{ e.legacy_id }}/"
+eleventyComputed:
+  title: "{{ (e.category or e.yoruba or e.legacy_id) | truncate(60) }}"
+layout: base.njk
+---
+{% set b = e.verify_status | badge %}
+<article class="entry-detail">
+  <p class="breadcrumb"><a href="/entries/">← Gbogbo Àkọsílẹ̀</a></p>
+
+  {% if e.yoruba %}<h1>{{ e.yoruba }}</h1>{% endif %}
+  {% if e.yoruba_alt and e.yoruba_alt != e.yoruba %}<p class="alt-phrasing">{{ e.yoruba_alt }}</p>{% endif %}
+  {% if e.english %}<p class="english-lead">{{ e.english }}</p>{% endif %}
+
+  <div class="meta">
+    <span class="badge {{ b.cls }}">{{ b.label }}</span>
+    <span class="pill">{{ e.domain }}</span>
+    {% if e.category %}<span class="pill">{{ e.category }}</span>{% endif %}
+    {% if e.difficulty %}<span class="pill">{{ e.difficulty }}</span>{% endif %}
+  </div>
+
+  {% if e.question or e.question_english %}
+  <section class="block">
+    <h2>Ìbéèrè — Prompt</h2>
+    {% if e.question %}<p class="yoruba-text">{{ e.question }}</p>{% endif %}
+    {% if e.question_english %}<p class="english-text">{{ e.question_english }}</p>{% endif %}
+  </section>
+  {% endif %}
+
+  {% if e.drop_text or e.drop_english %}
+  <section class="block">
+    <h2>Àlàyé — Explanation</h2>
+    {% if e.drop_text %}<p class="yoruba-text">{{ e.drop_text }}</p>{% endif %}
+    {% if e.drop_english %}<p class="english-text">{{ e.drop_english }}</p>{% endif %}
+  </section>
+  {% endif %}
+
+  {% if e.ifa and (e.ifa.odu or e.ifa.ebo) %}
+  <section class="block">
+    <h2>Ifá Cross-reference</h2>
+    {% if e.ifa.odu %}<p><strong>Odù:</strong> {{ e.ifa.odu }}</p>{% endif %}
+    {% if e.ifa.ebo %}<p><strong>Ẹbọ:</strong> {{ e.ifa.ebo }}</p>{% endif %}
+  </section>
+  {% endif %}
+
+  {% if not (e.drop_text or e.drop_english or e.question) %}
+  <section class="block">
+    <p class="thin-notice">This entry doesn't have a fuller explanation recorded yet — it's shown here exactly as collected. <a href="/pillars/{{ e.pillar | replace('_','-') }}/">Browse related entries</a> or help expand it via the Telegram bot.</p>
+  </section>
+  {% endif %}
+
+  <section class="block provenance">
+    <h2>Ìpìlẹ̀ṣẹ̀ — Provenance</h2>
+    <p>{{ b.label }}{% if e.source_citation %} — {{ e.source_citation }}{% endif %}</p>
+    {% if e.verify_status == "web_sourced_pending_verification" %}
+    <p class="thin-notice">This entry was added through web research to fill a content gap, cross-checked where possible against published sources, but not yet confirmed by a Yoruba-language authority or a second independent source. Treat it as a starting point.</p>
+    {% elif e.verify_status == "ai_generated_unverified" %}
+    <p class="thin-notice">This entry is an AI-assisted research brief built from a single source document, kept structurally separate from fieldwork- and publication-sourced content. It may contain unverified etymologies or interpretations.</p>
+    {% elif e.verify_status == "disputed" %}
+    <p class="thin-notice">Sources disagree on this point. Shown honestly rather than papered over — see the note above for specifics where available.</p>
+    {% endif %}
+    {% if e.tags and e.tags.length %}
+    <p class="tags">{% for t in e.tags %}<span class="pill small">{{ t }}</span>{% endfor %}</p>
+    {% endif %}
+  </section>
+</article>

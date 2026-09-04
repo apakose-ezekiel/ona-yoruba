@@ -25,12 +25,12 @@ title: Wá — Search
   function cardHtml(e) {
     const b = badgeMap[e.verify_status] || [e.verify_status, "unverified"];
     return (
-      '<div class="entry-card">' +
+      '<a class="entry-card" href="/entry/' + encodeURIComponent(e.legacy_id) + '/">' +
       (e.yoruba ? '<div class="yoruba">' + e.yoruba + "</div>" : "") +
       (e.english ? '<div class="english">' + e.english + "</div>" : "") +
       (e.drop_english ? "<p>" + e.drop_english + "</p>" : "") +
       '<div class="meta"><span class="badge ' + b[1] + '">' + b[0] + "</span><span>" +
-      e.domain + (e.category ? " · " + e.category : "") + "</span></div></div>"
+      e.domain + (e.category ? " · " + e.category : "") + "</span></div></a>"
     );
   }
 
