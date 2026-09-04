@@ -11,7 +11,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from supabase import create_client
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, Update
 from telegram.constants import ParseMode
 from telegram.ext import (
     Application,
@@ -44,6 +44,27 @@ BADGE_LABELS = {
     "unverified": "⚪ Unverified",
 }
 
+BTN_WORD = "📝 Ọ̀rọ̀ — Word"
+BTN_PROVERB = "📖 Òwe — Proverb"
+BTN_IFA = "🔮 Ifá"
+BTN_QUIZ = "🎮 Quiz"
+BTN_SEARCH = "🔍 Wá — Search"
+BTN_FAVORITES = "⭐ Favorites"
+BTN_ABOUT = "ℹ️ About"
+BTN_HELP = "❓ Help"
+
+MAIN_KEYBOARD = ReplyKeyboardMarkup(
+    [
+        [BTN_WORD, BTN_PROVERB],
+        [BTN_IFA, BTN_QUIZ],
+        [BTN_SEARCH, BTN_FAVORITES],
+        [BTN_ABOUT, BTN_HELP],
+    ],
+    resize_keyboard=True,
+)
+
+AWAITING_SEARCH = "awaiting_search"
+
 HELP_TEXT = (
     "*Ọ̀NÀ — Yoruba words, proverbs, Ifá/Odù, and culture*\n\n"
     "/word — a random Yoruba word\n"
@@ -55,7 +76,8 @@ HELP_TEXT = (
     "/search <term> — full-text search, or just send any message\n"
     "/favorites — your saved entries\n"
     "/about — contact &amp; how entries are verified\n\n"
-    "Same archive as onayoruba site (link in /about) — anything added there shows up here too."
+    "Use the buttons below instead of typing commands if you prefer.\n\n"
+    "Same archive as the onayoruba site (link in /about) — anything added there shows up here too."
 )
 
 
@@ -122,14 +144,16 @@ def entry_of_the_day(domain: str):
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     upsert_user(update)
+    context.user_data[AWAITING_SEARCH] = False
     await update.message.reply_text(
         f"Ẹ nlẹ́, {update.effective_user.first_name}! Ọ̀NÀ ń kí ẹ.\n\n" + HELP_TEXT,
         parse_mode=ParseMode.MARKDOWN,
+        reply_markup=MAIN_KEYBOARD,
     )
 
 
 async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(HELP_TEXT, parse_mode=ParseMode.MARKDOWN)
+    await update.message.reply_text(HELP_TEXT, parse_mode=ParseMode.MARKDOWN, reply_markup=MAIN_KEYBOARD)
 
 
 async def word_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -205,8 +229,31 @@ async def search_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def free_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Any non-command message doubles as a search / 'ask a question' query."""
-    await run_search(update, update.message.text)
+    """Routes menu-button taps, then falls back to search for anything else
+    (this is what makes free-text 'ask a question' messages work)."""
+    text = update.message.text
+
+    button_routes = {
+        BTN_WORD: word_cmd,
+        BTN_PROVERB: proverb_cmd,
+        BTN_IFA: ifa_cmd,
+        BTN_QUIZ: quiz_cmd,
+        BTN_FAVORITES: favorites_cmd,
+        BTN_ABOUT: about_cmd,
+        BTN_HELP: help_cmd,
+    }
+    if text in button_routes:
+        context.user_data[AWAITING_SEARCH] = False
+        await button_routes[text](update, context)
+        return
+
+    if text == BTN_SEARCH:
+        context.user_data[AWAITING_SEARCH] = True
+        await update.message.reply_text("Kọ ohun tí o fẹ́ wá sí ìsàlẹ̀ yìí — type what you'd like to search for.")
+        return
+
+    context.user_data[AWAITING_SEARCH] = False
+    await run_search(update, text)
 
 
 async def run_search(update: Update, query: str):
