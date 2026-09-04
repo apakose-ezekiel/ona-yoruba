@@ -46,17 +46,22 @@ title: Wá — Search
   });
 
   async function runSearch(term) {
-    const query = term.split(/\s+/).join(" & ");
-    const url = SUPABASE_URL + "/rest/v1/entries?select=*&search_vector=fts." + encodeURIComponent(query) + "&limit=50";
+    const url = SUPABASE_URL + "/rest/v1/rpc/search_entries";
     try {
       const res = await fetch(url, {
-        headers: { apikey: SUPABASE_ANON_KEY, Authorization: "Bearer " + SUPABASE_ANON_KEY },
+        method: "POST",
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: "Bearer " + SUPABASE_ANON_KEY,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ q: term, max_results: 12 }),
       });
       if (!res.ok) throw new Error(await res.text());
       const rows = await res.json();
       results.innerHTML = rows.length
         ? rows.map(cardHtml).join("")
-        : "<p>Kò sí àbájáde. No results.</p>";
+        : "<p>Kò sí àbájáde tààrà. Àwọn tí ó súnmọ́ jùlọ ni wọ̀nyí — closest matches: none found either.</p>";
     } catch (err) {
       results.innerHTML = "<p>Search unavailable right now.</p>";
     }

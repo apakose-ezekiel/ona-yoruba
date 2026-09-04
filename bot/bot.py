@@ -44,10 +44,19 @@ BADGE_LABELS = {
     "unverified": "⚪ Unverified",
 }
 
-BTN_WORD = "📝 Ọ̀rọ̀ — Word"
-BTN_PROVERB = "📖 Òwe — Proverb"
+# Domain buttons mirror the site's /entries/ filter chips exactly, so the
+# bot covers every domain the site does, not just a handful.
+BTN_WORD = "📝 Ọ̀rọ̀ — Vocabulary"
+BTN_PROVERB = "📖 Òwe — Proverbs"
 BTN_IFA = "🔮 Ifá"
-BTN_QUIZ = "🎮 Quiz"
+BTN_ORISA = "🛕 Òrìṣà"
+BTN_ORIKI = "👑 Oríkì"
+BTN_AROKO = "📯 Àrokò"
+BTN_ETHICS = "⚖️ Ìwà — Ethics"
+BTN_DISCOURSE = "💬 Discourse"
+BTN_QUIZ = "🎮 Nje O Mọ — Quiz"
+BTN_WOTD = "🌅 Ọ̀rọ̀ Òní — Word of the Day"
+BTN_POTD = "🌇 Òwe Òní — Proverb of the Day"
 BTN_SEARCH = "🔍 Wá — Search"
 BTN_FAVORITES = "⭐ Favorites"
 BTN_ABOUT = "ℹ️ About"
@@ -56,7 +65,11 @@ BTN_HELP = "❓ Help"
 MAIN_KEYBOARD = ReplyKeyboardMarkup(
     [
         [BTN_WORD, BTN_PROVERB],
-        [BTN_IFA, BTN_QUIZ],
+        [BTN_IFA, BTN_ORISA],
+        [BTN_ORIKI, BTN_AROKO],
+        [BTN_ETHICS, BTN_DISCOURSE],
+        [BTN_QUIZ],
+        [BTN_WOTD, BTN_POTD],
         [BTN_SEARCH, BTN_FAVORITES],
         [BTN_ABOUT, BTN_HELP],
     ],
@@ -67,16 +80,11 @@ AWAITING_SEARCH = "awaiting_search"
 
 HELP_TEXT = (
     "*Ọ̀NÀ — Yoruba words, proverbs, Ifá/Odù, and culture*\n\n"
-    "/word — a random Yoruba word\n"
-    "/proverb — a random òwe (proverb)\n"
-    "/ifa — a random Ifá/Òrìṣà entry\n"
-    "/wotd — word of the day\n"
-    "/potd — proverb of the day\n"
-    "/quiz — play a round of Nje O Mọ\n"
-    "/search <term> — full-text search, or just send any message\n"
-    "/favorites — your saved entries\n"
-    "/about — contact &amp; how entries are verified\n\n"
-    "Use the buttons below instead of typing commands if you prefer.\n\n"
+    "Every button below covers a domain from the site — Vocabulary, Proverbs, "
+    "Ifá, Òrìṣà, Oríkì, Àrokò, Ethics, Discourse, plus Quiz, Word/Proverb of "
+    "the Day, Search, and Favorites.\n\n"
+    "Type any question or word and I'll search for it, even if it's not exact "
+    "— closest matches come back instead of nothing.\n\n"
     "Same archive as the onayoruba site (link in /about) — anything added there shows up here too."
 )
 
@@ -156,28 +164,30 @@ async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(HELP_TEXT, parse_mode=ParseMode.MARKDOWN, reply_markup=MAIN_KEYBOARD)
 
 
-async def word_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    e = random_entry("vocab")
-    if not e:
-        await update.message.reply_text("No words available right now.")
-        return
-    await update.message.reply_text(format_entry(e), parse_mode=ParseMode.MARKDOWN, reply_markup=entry_keyboard(e))
+def make_domain_handler(domain: str | list[str], empty_msg: str):
+    """One handler generator for every domain button (word/proverb/ifa/orisa/
+    oriki/aroko/ethics/discourse) instead of near-duplicate functions."""
+
+    async def handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        e = random_entry(domain)
+        if not e:
+            await update.message.reply_text(empty_msg)
+            return
+        await update.message.reply_text(
+            format_entry(e), parse_mode=ParseMode.MARKDOWN, reply_markup=entry_keyboard(e)
+        )
+
+    return handler
 
 
-async def proverb_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    e = random_entry("owe")
-    if not e:
-        await update.message.reply_text("No proverbs available right now.")
-        return
-    await update.message.reply_text(format_entry(e), parse_mode=ParseMode.MARKDOWN, reply_markup=entry_keyboard(e))
-
-
-async def ifa_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    e = random_entry(["ifa", "orisa"])
-    if not e:
-        await update.message.reply_text("No Ifá/Òrìṣà entries available right now.")
-        return
-    await update.message.reply_text(format_entry(e), parse_mode=ParseMode.MARKDOWN, reply_markup=entry_keyboard(e))
+word_cmd = make_domain_handler("vocab", "No words available right now.")
+proverb_cmd = make_domain_handler("owe", "No proverbs available right now.")
+ifa_cmd = make_domain_handler("ifa", "No Ifá entries available right now.")
+orisa_cmd = make_domain_handler("orisa", "No Òrìṣà entries available right now.")
+oriki_cmd = make_domain_handler("oriki", "No oríkì entries available right now.")
+aroko_cmd = make_domain_handler("aroko", "No àrokò entries available right now.")
+ethics_cmd = make_domain_handler("ethics", "No ethics entries available right now.")
+discourse_cmd = make_domain_handler("discourse", "No discourse entries available right now.")
 
 
 async def wotd_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -215,8 +225,7 @@ async def quiz_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def search_entries(query: str):
-    fts_query = " & ".join(query.split())
-    res = sb.table("entries").select("*").fts("search_vector", fts_query).limit(5).execute()
+    res = sb.rpc("search_entries", {"q": query, "max_results": 6}).execute()
     return res.data
 
 
@@ -237,7 +246,14 @@ async def free_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
         BTN_WORD: word_cmd,
         BTN_PROVERB: proverb_cmd,
         BTN_IFA: ifa_cmd,
+        BTN_ORISA: orisa_cmd,
+        BTN_ORIKI: oriki_cmd,
+        BTN_AROKO: aroko_cmd,
+        BTN_ETHICS: ethics_cmd,
+        BTN_DISCOURSE: discourse_cmd,
         BTN_QUIZ: quiz_cmd,
+        BTN_WOTD: wotd_cmd,
+        BTN_POTD: potd_cmd,
         BTN_FAVORITES: favorites_cmd,
         BTN_ABOUT: about_cmd,
         BTN_HELP: help_cmd,
@@ -351,6 +367,11 @@ def main():
     app.add_handler(CommandHandler("word", word_cmd))
     app.add_handler(CommandHandler("proverb", proverb_cmd))
     app.add_handler(CommandHandler("ifa", ifa_cmd))
+    app.add_handler(CommandHandler("orisa", orisa_cmd))
+    app.add_handler(CommandHandler("oriki", oriki_cmd))
+    app.add_handler(CommandHandler("aroko", aroko_cmd))
+    app.add_handler(CommandHandler("ethics", ethics_cmd))
+    app.add_handler(CommandHandler("discourse", discourse_cmd))
     app.add_handler(CommandHandler("wotd", wotd_cmd))
     app.add_handler(CommandHandler("potd", potd_cmd))
     app.add_handler(CommandHandler("quiz", quiz_cmd))
