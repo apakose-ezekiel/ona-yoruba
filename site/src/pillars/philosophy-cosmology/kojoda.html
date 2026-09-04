@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kójódá — Complete Yoruba Calendar Documentation · Year 10,068</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --earth: #12100a;
+    --earth2: #1a1208;
+    --ochre: #c8860a;
+    --ochre-light: #e8a83a;
+    --cream: #f5ead8;
+    --cream-dark: #d8c8a0;
+    --rust: #8b3a1a;
+    --green-deep: #0f2018;
+    --border: rgba(200,134,10,0.25);
+    --border-strong: rgba(200,134,10,0.55);
+    --jakuta-bg: #1e0e08;
+    --jakuta-accent: #c84a1a;
+    --jakuta-text: #f0a080;
+    --obatala-bg: #0a0e18;
+    --obatala-accent: #7090c0;
+    --obatala-text: #a8c0e0;
+    --ifa-bg: #0e1208;
+    --ifa-accent: #c8a020;
+    --ifa-text: #e0c870;
+    --ogun-bg: #081408;
+    --ogun-accent: #408040;
+    --ogun-text: #80b880;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--earth);
+    color: var(--cream);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.3;
+  }
+
+  /* ════════════════════════════════
+     HERO
+  ════════════════════════════════ */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 80px 40px;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, #2d1a05 0%, var(--earth) 70%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 80%, #c8860a18 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, #8b3a1a14 0%, transparent 50%);
+  }
+  .hero-inner { position: relative; z-index: 2; max-width: 900px; }
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--ochre);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(64px, 11vw, 120px);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.4s forwards;
+  }
+  .hero-title em { color: var(--ochre); font-style: italic; }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(17px, 2.5vw, 24px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cream-dark);
+    margin-bottom: 44px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.6s forwards;
+  }
+  .hero-tagline {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--ochre-light);
+    opacity: 0;
+    animation: fadeUp 0.7s 0.8s forwards;
+  }
+  .hero-divider {
+    width: 1px; height: 72px;
+    background: linear-gradient(to bottom, transparent, var(--ochre), transparent);
+    margin: 44px auto 0;
+    opacity: 0;
+    animation: fadeUp 0.7s 1s forwards;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ════════════════════════════════
+     TOP NAV (sections)
+  ════════════════════════════════ */
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: rgba(18,16,10,0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-strong);
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .top-nav::-webkit-scrollbar { display: none; }
+  .top-nav-btn {
+    background: none;
+    border: none;
+    color: var(--cream-dark);
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 16px 22px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .top-nav-btn:hover { color: var(--ochre-light); }
+  .top-nav-btn.active { color: var(--ochre); border-bottom-color: var(--ochre); }
+
+  /* ════════════════════════════════
+     STAT STRIP
+  ════════════════════════════════ */
+  .stat-strip {
+    background: var(--green-deep);
+    border-top: 1px solid var(--ochre);
+    border-bottom: 1px solid var(--ochre);
+    padding: 56px 40px;
+  }
+  .stat-strip-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 40px;
+    text-align: center;
+  }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--ochre);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--cream-dark);
+    margin-top: 10px;
+    display: block;
+  }
+  .stat-note { font-style: italic; font-size: 12px; color: var(--ochre-light); margin-top: 4px; display: block; }
+
+  /* ════════════════════════════════
+     SHARED DOC SECTION
+  ════════════════════════════════ */
+  .doc-section {
+    padding: 90px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--ochre);
+    margin-bottom: 14px;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(34px, 5vw, 60px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 40px;
+  }
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--ochre-light);
+    margin: 44px 0 14px;
+  }
+  p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--cream-dark);
+    max-width: 720px;
+    margin-bottom: 22px;
+  }
+  .rule { width: 100%; height: 1px; background: var(--border); max-width: 1200px; margin: 0 auto; }
+
+  /* ════════════════════════════════
+     TABLES
+  ════════════════════════════════ */
+  .compare-wrap { overflow-x: auto; margin: 40px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  thead tr { background: var(--green-deep); border-bottom: 2px solid var(--ochre); }
+  th {
+    padding: 18px 22px;
+    text-align: left;
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ochre);
+    font-weight: 400;
+  }
+  td {
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border);
+    color: var(--cream-dark);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  tr:nth-child(even) td { background: #1a1208; }
+  tr:hover td { background: #231808; }
+  td:first-child { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--cream); }
+  td.yoruba-col { color: var(--ochre-light); }
+  td.flag { color: #e8a040; font-style: italic; font-size: 13px; }
+
+  /* ════════════════════════════════
+     DISCREPANCY BLOCK
+  ════════════════════════════════ */
+  .discrepancy-block {
+    background: #1a0a05;
+    border-left: 4px solid var(--rust);
+    padding: 28px 36px;
+    margin: 36px 0;
+  }
+  .discrepancy-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 10px;
+  }
+  .discrepancy-block p { font-size: 15px; max-width: 100%; }
+  .discrepancy-block.note { border-left-color: var(--ochre); }
+  .discrepancy-block.note .discrepancy-label { color: var(--ochre); }
+
+  /* ════════════════════════════════
+     13 MONTHS GRID
+  ════════════════════════════════ */
+  .months-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2px;
+    margin: 48px 0;
+    border: 1px solid var(--border);
+  }
+  .month-card {
+    background: #1a1208;
+    padding: 24px 28px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .month-card::before {
+    content: attr(data-num);
+    position: absolute;
+    top: -10px; right: 12px;
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-weight: 900;
+    color: var(--ochre);
+    opacity: 0.06;
+    line-height: 1;
+  }
+  .month-card:hover { background: #231808; }
+  .m-num { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--ochre); letter-spacing: 0.2em; }
+  .m-name { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--cream); margin: 6px 0 3px; }
+  .m-meaning { font-style: italic; font-size: 13px; color: var(--cream-dark); opacity: 0.7; }
+
+  /* ════════════════════════════════
+     4-DAY WEEK BLOCK
+  ════════════════════════════════ */
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    margin: 44px 0;
+  }
+  .day-card {
+    padding: 36px 20px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .day-card:last-child { border-right: none; }
+  .day-card:nth-child(1) { background: var(--jakuta-bg); }
+  .day-card:nth-child(2) { background: var(--obatala-bg); }
+  .day-card:nth-child(3) { background: var(--ifa-bg); }
+  .day-card:nth-child(4) { background: var(--ogun-bg); }
+  .d-deity { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 10px; }
+  .d-name { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--cream); margin-bottom: 10px; }
+  .d-orisa { font-style: italic; font-size: 13px; color: var(--cream-dark); opacity: 0.7; line-height: 1.6; }
+  .day-card:nth-child(1) .d-deity { color: var(--jakuta-text); }
+  .day-card:nth-child(2) .d-deity { color: var(--obatala-text); }
+  .day-card:nth-child(3) .d-deity { color: var(--ifa-text); }
+  .day-card:nth-child(4) .d-deity { color: var(--ogun-text); }
+
+  /* ════════════════════════════════
+     TIME OF DAY
+  ════════════════════════════════ */
+  .time-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0;
+    border: 1px solid var(--border);
+    margin: 44px 0;
+  }
+  .time-card { padding: 20px 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .time-period { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--cream); margin-bottom: 4px; }
+  .time-range { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--ochre); letter-spacing: 0.12em; }
+
+  /* ════════════════════════════════
+     WORLD CALENDARS
+  ════════════════════════════════ */
+  .world-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2px;
+    margin: 44px 0;
+  }
+  .world-card { background: #1a1208; border: 1px solid var(--border); padding: 28px; }
+  .world-name { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ochre); margin-bottom: 6px; }
+  .world-year { font-family: 'Playfair Display', serif; font-size: 34px; color: var(--cream); line-height: 1; margin-bottom: 10px; }
+  .world-desc { font-size: 13px; color: var(--cream-dark); opacity: 0.75; line-height: 1.6; max-width: 100%; margin: 0; }
+
+  /* ════════════════════════════════
+     FULL YEAR CALENDAR — LEGEND
+  ════════════════════════════════ */
+  #full-year { background: #0e0c07; }
+  .cal-legend {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+  }
+  .cal-legend-item {
+    flex: 1;
+    min-width: 200px;
+    padding: 20px 28px;
+    border-right: 1px solid var(--border);
+  }
+  .cal-legend-item:last-child { border-right: none; }
+  .leg-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 9px;
+    vertical-align: middle;
+  }
+  .leg-name { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--cream); margin-bottom: 3px; }
+  .leg-orisa { font-family: 'Space Mono', monospace; font-size: 7px; letter-spacing: 0.12em; line-height: 1.9; }
+  .l-jakuta .leg-dot { background: var(--jakuta-accent); }
+  .l-jakuta .leg-orisa { color: var(--jakuta-text); }
+  .l-obatala .leg-dot { background: var(--obatala-accent); }
+  .l-obatala .leg-orisa { color: var(--obatala-text); }
+  .l-ifa .leg-dot { background: var(--ifa-accent); }
+  .l-ifa .leg-orisa { color: var(--ifa-text); }
+  .l-ogun .leg-dot { background: var(--ogun-accent); }
+  .l-ogun .leg-orisa { color: var(--ogun-text); }
+
+  /* MONTH NAV inside year */
+  .month-nav {
+    position: sticky;
+    top: 49px;
+    z-index: 150;
+    background: rgba(14,12,7,0.97);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .month-nav::-webkit-scrollbar { display: none; }
+  .month-nav-inner { display: flex; min-width: max-content; }
+  .nav-btn {
+    background: none;
+    border: none;
+    color: var(--cream-dark);
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 14px 18px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-btn:hover { color: var(--ochre-light); }
+  .nav-btn.active { color: var(--ochre); border-bottom-color: var(--ochre); }
+
+  /* MONTHS WRAPPER */
+  .months-wrapper { padding: 0 32px 80px; max-width: 1400px; margin: 0 auto; }
+
+  /* MONTH BLOCK */
+  .month-block {
+    padding: 60px 0 44px;
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .month-block.visible { opacity: 1; transform: none; }
+
+  .month-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .month-num-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ochre);
+    margin-bottom: 6px;
+  }
+  .month-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1;
+  }
+  .month-meaning-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-style: italic;
+    color: var(--cream-dark);
+    margin-top: 5px;
+  }
+  .month-meta { text-align: right; }
+  .month-meta-days {
+    font-family: 'Playfair Display', serif;
+    font-size: 44px;
+    color: var(--ochre);
+    line-height: 1;
+    display: block;
+  }
+  .month-meta-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cream-dark);
+    display: block;
+  }
+  .month-meta-greg {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    color: var(--ochre-light);
+    margin-top: 4px;
+    display: block;
+    opacity: 0.65;
+  }
+
+  /* CALENDAR TABLE */
+  .cal {
+    width: 100%;
+    border: 1px solid var(--border-strong);
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  .cal thead th {
+    padding: 12px 8px;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    font-weight: 400;
+  }
+  .col-jakuta  { background: var(--jakuta-bg);  color: var(--jakuta-text); }
+  .col-obatala { background: var(--obatala-bg); color: var(--obatala-text); }
+  .col-ifa     { background: var(--ifa-bg);     color: var(--ifa-text); }
+  .col-ogun    { background: var(--ogun-bg);    color: var(--ogun-text); }
+
+  .week-row-label td {
+    background: #0a0804;
+    padding: 5px 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 6px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #3a3020;
+    border: 1px solid #1a1208;
+  }
+  .cal td.day-cell {
+    border: 1px solid var(--border);
+    padding: 0;
+    vertical-align: top;
+    height: 88px;
+    width: 25%;
+    transition: filter 0.15s;
+  }
+  .cal td.day-cell:hover { filter: brightness(1.3); }
+  .day-inner {
+    padding: 11px 13px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .day-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 21px;
+    line-height: 1;
+    font-weight: 700;
+  }
+  .day-orisa-short {
+    font-family: 'Space Mono', monospace;
+    font-size: 6px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.6;
+    opacity: 0.75;
+  }
+  .type-jakuta  { background: var(--jakuta-bg); }
+  .type-jakuta .day-num { color: var(--jakuta-text); }
+  .type-jakuta .day-orisa-short { color: var(--jakuta-text); }
+  .type-obatala { background: var(--obatala-bg); }
+  .type-obatala .day-num { color: var(--obatala-text); }
+  .type-obatala .day-orisa-short { color: var(--obatala-text); }
+  .type-ifa { background: var(--ifa-bg); }
+  .type-ifa .day-num { color: var(--ifa-text); }
+  .type-ifa .day-orisa-short { color: var(--ifa-text); }
+  .type-ogun { background: var(--ogun-bg); }
+  .type-ogun .day-num { color: var(--ogun-text); }
+  .type-ogun .day-orisa-short { color: var(--ogun-text); }
+
+  /* ════════════════════════════════
+     FOOTER
+  ════════════════════════════════ */
+  footer {
+    background: #0a0804;
+    border-top: 1px solid var(--border);
+    padding: 56px 40px;
+    text-align: center;
+  }
+  footer p { font-size: 13px; color: #4a3f2f; max-width: 720px; margin: 0 auto 10px; line-height: 1.7; }
+  footer strong { color: var(--ochre); }
+
+  /* ════════════════════════════════
+     REVEAL
+  ════════════════════════════════ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ════════════════════════════════
+     RESPONSIVE
+  ════════════════════════════════ */
+  @media (max-width: 800px) {
+    .week-grid { grid-template-columns: repeat(2, 1fr); }
+    .doc-section { padding: 60px 20px; }
+    .months-wrapper { padding: 0 12px 60px; }
+  }
+  @media (max-width: 520px) {
+    .cal td.day-cell { height: 68px; }
+    .day-num { font-size: 17px; }
+    .day-orisa-short { font-size: 5px; }
+    .month-title { font-size: 28px; }
+    .hero { padding: 56px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     HERO
+══════════════════════════════════════════ -->
+<div class="hero" id="top">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Complete Documentation — Yoruba Timekeeping System</p>
+    <h1 class="hero-title">Kọ́jọ́<em>dá</em></h1>
+    <p class="hero-sub">Kí Ọjọ́ Dá — May the Day Be Clearly Foreseen</p>
+    <p class="hero-tagline">The Ancient Yoruba Calendar · 364 Days · 13 Months · 4-Day Week · Year 10,068</p>
+    <div class="hero-divider"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TOP NAV
+══════════════════════════════════════════ -->
+<nav class="top-nav" id="topNav">
+  <button class="top-nav-btn active" onclick="scrollTo('overview')">01 Overview</button>
+  <button class="top-nav-btn" onclick="scrollTo('structure')">02 Year Structure</button>
+  <button class="top-nav-btn" onclick="scrollTo('months')">03 The 13 Months</button>
+  <button class="top-nav-btn" onclick="scrollTo('week')">04 4-Day Week</button>
+  <button class="top-nav-btn" onclick="scrollTo('time')">05 Daily Time</button>
+  <button class="top-nav-btn" onclick="scrollTo('yearcount')">06 Year Count</button>
+  <button class="top-nav-btn" onclick="scrollTo('world')">07 World Calendars</button>
+  <button class="top-nav-btn" onclick="scrollTo('function')">08 Cultural Function</button>
+  <button class="top-nav-btn" onclick="scrollTo('openqs')">09 Open Questions</button>
+  <button class="top-nav-btn" onclick="scrollTo('full-year')">10 Full Year Calendar ↓</button>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     STAT STRIP
+══════════════════════════════════════════ -->
+<div class="stat-strip">
+  <div class="stat-strip-inner">
+    <div><span class="stat-number">13</span><span class="stat-label">Months per Year</span></div>
+    <div><span class="stat-number">4</span><span class="stat-label">Days per Week</span><span class="stat-note">Each named for an Òrìṣà</span></div>
+    <div><span class="stat-number">364</span><span class="stat-label">Days per Year</span><span class="stat-note">13 × 7 × 4 = 364</span></div>
+    <div><span class="stat-number">10,068</span><span class="stat-label">Yoruba Year</span><span class="stat-note">From June 3, 2026 CE</span></div>
+    <div><span class="stat-number">52M+</span><span class="stat-label">Yoruba People</span><span class="stat-note">Continent + diaspora</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     01 OVERVIEW
+══════════════════════════════════════════ -->
+<div id="overview"></div>
+<div class="doc-section reveal">
+  <div class="section-label">01 — Overview</div>
+  <h2>What is Kójódá?</h2>
+  <p>Kójódá is the pre-colonial Yoruba calendar system — a complete framework for measuring time rooted in Yoruba cosmology, agricultural cycles, and Òrìṣà worship. The name comes from the phrase <em>Kí Ọjọ́ Dá</em>: "May the day be clearly foreseen." The calendar does not merely count days. It assigns spiritual significance to every day through the four-day Òrìṣà cycle, anchoring time to devotion rather than administration.</p>
+  <p>Today, the Kójódá is actively maintained and published monthly by Yoruba traditionalists. The Dundun Centre, among others, publicly advocates for its recognition as a living cultural system — not an archaeological relic. As of June 6, 2026, the Ọdún Ifá Àgbáyé (World Ifá Festival) was observed in Ilé-Ifẹ̀, with pilgrims journeying to the holy hills of Òkè Ìtasẹ̀ and Òkè Ìgẹ̀tí.</p>
+
+  <div class="discrepancy-block">
+    <div class="discrepancy-label">Source Conflict — Weeks per Month</div>
+    <p>The infographic states <strong>4 weeks per month</strong>. The Dundun Centre press release states <strong>7 weeks per month</strong>. Both arrive at 28-day months and 364-day years through the same math (4 × 7 = 28). The practical Kójódá monthly listing contains 30 entries — which fits neither cleanly. This calendar renders the mathematically clean 28-day / 7-week version, consistent with the 364-day annual total. Requires verification from a primary Babaláwo source.</p>
+  </div>
+</div>
+<div class="rule"></div>
+
+<!-- ══════════════════════════════════════════
+     02 YEAR STRUCTURE
+══════════════════════════════════════════ -->
+<div id="structure"></div>
+<div class="doc-section reveal">
+  <div class="section-label">02 — Year Structure</div>
+  <h2>How the Year is Built</h2>
+  <div class="compare-wrap">
+    <table>
+      <thead><tr><th>Element</th><th>Kójódá (Yoruba)</th><th>Gregorian</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Days per year</td><td class="yoruba-col">364</td><td>365 / 366 (leap)</td><td>Yoruba year is 1–2 days shorter annually</td></tr>
+        <tr><td>Months per year</td><td class="yoruba-col">13</td><td>12</td><td>Yoruba has one extra month</td></tr>
+        <tr><td>Days per week</td><td class="yoruba-col">4</td><td>7</td><td>The 7-day week entered via colonial and Islamic contact</td></tr>
+        <tr><td>Weeks per month</td><td class="yoruba-col">Disputed — 4 or 7</td><td>4–5 (variable)</td><td>Both produce 28-day months; see conflict note</td></tr>
+        <tr><td>New Year</td><td class="yoruba-col">Early June (~Jun 2–3)</td><td>January 1</td><td>Yoruba New Year coincides with Ọdún Ifá Àgbáyé</td></tr>
+        <tr><td>Days named for</td><td class="yoruba-col">Òrìṣà (deities)</td><td>Roman/Norse gods and planets</td><td>Both traditions embed cosmology in weekday naming</td></tr>
+        <tr><td>Year reference point</td><td class="yoruba-col">Yoruba civilisation origin</td><td>Birth of Jesus Christ</td><td>Yoruba Year ~10,068 in 2026 CE</td></tr>
+        <tr><td>Calendar type</td><td class="yoruba-col">[Unverified] Luni-solar / cultural</td><td>Solar (tropical year)</td><td>Astronomical basis not documented in provided sources</td></tr>
+        <tr><td>Leap / intercalation</td><td class="yoruba-col">[Cannot verify]</td><td>Every 4 years (+1 day)</td><td>How Kójódá handles the ~1.25-day annual shortfall is unknown from sources</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="rule"></div>
+
+<!-- ══════════════════════════════════════════
+     03 THE 13 MONTHS
+══════════════════════════════════════════ -->
+<div id="months"></div>
+<div class="doc-section reveal">
+  <div class="section-label">03 — The Thirteen Months</div>
+  <h2>Ìgbà Odún — The Year's Seasons</h2>
+  <p>Each month carries a name and a thematic meaning — agricultural, spiritual, or social. The year begins with Ògúnmégé (The Hunter's Month) around June 3, and the 13th month shares its name with the first, representing cyclical return.</p>
+  <div class="months-grid">
+    <div class="month-card" data-num="1"><div class="m-num">Month 01 · New Year</div><div class="m-name">Ògúnmégé</div><div class="m-meaning">The Hunter's Month</div></div>
+    <div class="month-card" data-num="2"><div class="m-num">Month 02</div><div class="m-name">Òrúnmìlà</div><div class="m-meaning">The Oracle's Month</div></div>
+    <div class="month-card" data-num="3"><div class="m-num">Month 03</div><div class="m-name">Ògúnmorán</div><div class="m-meaning">The Farmer's Month</div></div>
+    <div class="month-card" data-num="4"><div class="m-num">Month 04</div><div class="m-name">Òdúdúwà</div><div class="m-meaning">The Rain Maker's Month</div></div>
+    <div class="month-card" data-num="5"><div class="m-num">Month 05</div><div class="m-name">Òkéré</div><div class="m-meaning">The Abundance Month</div></div>
+    <div class="month-card" data-num="6"><div class="m-num">Month 06</div><div class="m-name">Òséré</div><div class="m-meaning">The Settlement Month</div></div>
+    <div class="month-card" data-num="7"><div class="m-num">Month 07</div><div class="m-name">Òsè</div><div class="m-meaning">The Rest Month</div></div>
+    <div class="month-card" data-num="8"><div class="m-num">Month 08</div><div class="m-name">Ògún</div><div class="m-meaning">The Iron Month</div></div>
+    <div class="month-card" data-num="9"><div class="m-num">Month 09</div><div class="m-name">Òwéwé</div><div class="m-meaning">The Market Month</div></div>
+    <div class="month-card" data-num="10"><div class="m-num">Month 10</div><div class="m-name">Òná</div><div class="m-meaning">The Owner Month</div></div>
+    <div class="month-card" data-num="11"><div class="m-num">Month 11</div><div class="m-name">Òjé</div><div class="m-meaning">The Youth Month</div></div>
+    <div class="month-card" data-num="12"><div class="m-num">Month 12</div><div class="m-name">Òrúdúdé</div><div class="m-meaning">The Festival Month</div></div>
+    <div class="month-card" data-num="13"><div class="m-num">Month 13 · Year End</div><div class="m-name">Ògúnmégé</div><div class="m-meaning">Back to the Beginning</div></div>
+  </div>
+</div>
+<div class="rule"></div>
+
+<!-- ══════════════════════════════════════════
+     04 4-DAY WEEK
+══════════════════════════════════════════ -->
+<div id="week"></div>
+<div class="doc-section reveal">
+  <div class="section-label">04 — The Four-Day Week</div>
+  <h2>Ọsẹ — The Sacred Week Cycle</h2>
+  <p>Where the Gregorian week names Roman and Norse gods (Saturn → Saturday, Thor → Thursday), the Yoruba week names living Òrìṣà — deities still actively worshipped. Every day is a devotional appointment. The four days cycle without interruption across months and the full year.</p>
+  <div class="week-grid">
+    <div class="day-card">
+      <div class="d-deity">Day 1 · Ọjọ́ Ọ̀sẹ̀ Ṣàngó</div>
+      <div class="d-name">Ṣàngó / Jàkúta</div>
+      <div class="d-orisa">Ṣàngó · Ọya · Aganjú<br>Yemọja · Ìbejì · Nàná-Bùkúù<br><em>Thunder, kingship, justice</em></div>
+    </div>
+    <div class="day-card">
+      <div class="d-deity">Day 2 · Ọjọ́ Ọ̀sẹ̀ Òòṣà</div>
+      <div class="d-name">Ọbàtálá</div>
+      <div class="d-orisa">Ọbàtálá · Ọbalúayé · Egúngún<br>Ìyàmi Àjẹ́ · Òrìṣà Òkè<br><em>Creation, whiteness, patience</em></div>
+    </div>
+    <div class="day-card">
+      <div class="d-deity">Day 3 · Ọjọ́ Ọ̀sẹ̀ Awo</div>
+      <div class="d-name">Ifá / Ọ̀rúnmìlà</div>
+      <div class="d-orisa">Ifá · Ọ̀rúnmìlà · Èṣù · Orí<br>Odù · Ọ̀ṣun · Ọ̀sányìn · Ẹgbẹ́<br><em>Wisdom, divination, destiny</em></div>
+    </div>
+    <div class="day-card">
+      <div class="d-deity">Day 4 · Ọjọ́ Ọ̀sẹ̀ Ògún</div>
+      <div class="d-name">Ògún</div>
+      <div class="d-orisa">Ògún · Ọ̀ṣọ́ọ̀sì · Erinlẹ̀<br>Òrìṣà Oko · Ìja<br><em>Iron, labor, the road</em></div>
+    </div>
+  </div>
+
+  <div class="discrepancy-block">
+    <div class="discrepancy-label">Source Conflict — Day Order</div>
+    <p>The infographic and Dundun Centre press release list the week opening with Ọbàtálá (Day 1), then Ifá (Day 2), Ògún (Day 3), Ṣàngó (Day 4). The practical Kójódá monthly listing begins each cycle with Jàkúta/Ṣàngó — placing Ṣàngó as Day 1. This full year calendar uses the Ṣàngó-first order, matching the Kójódá listing source. The conflict is unresolved.</p>
+  </div>
+
+  <h3>Yoruba Weekday Names in the Modern 7-Day System</h3>
+  <p>After colonial contact introduced the seven-day week, Yoruba gave those days their own names. Both systems coexist today.</p>
+  <div class="compare-wrap">
+    <table>
+      <thead><tr><th>English Day</th><th>Yoruba Name</th></tr></thead>
+      <tbody>
+        <tr><td>Sunday</td><td class="yoruba-col">Ọjọ́ Àikú</td></tr>
+        <tr><td>Monday</td><td class="yoruba-col">Ọjọ́ Ajé</td></tr>
+        <tr><td>Tuesday</td><td class="yoruba-col">Ọjọ́ Ìṣẹgun</td></tr>
+        <tr><td>Wednesday</td><td class="yoruba-col">Ọjọ́ Rú</td></tr>
+        <tr><td>Thursday</td><td class="yoruba-col">Ọjọ́ Bọ</td></tr>
+        <tr><td>Friday</td><td class="yoruba-col">Ọjọ́ Ẹti</td></tr>
+        <tr><td>Saturday</td><td class="yoruba-col">Ọjọ́ Àbámẹta</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="rule"></div>
+
+<!-- ══════════════════════════════════════════
+     05 TIME OF DAY
+══════════════════════════════════════════ -->
+<div id="time"></div>
+<div class="doc-section reveal">
+  <div class="section-label">05 — Daily Time System</div>
+  <h2>Àkókò Ọjọ́ — Naming the Hours</h2>
+  <p>Before clocks, Yoruba divided the day into 11 named periods — each describing the quality of light, heat, and activity rather than arbitrary 60-minute blocks. Unlike the Gregorian clock's uniform hours, these periods vary in length. Time was phenomenological: defined by what was happening, not by mechanical division.</p>
+  <div class="time-grid">
+    <div class="time-card"><div class="time-period">Owuro</div><div class="time-range">6:00 AM — 10:00 AM · 4 hours</div></div>
+    <div class="time-card"><div class="time-period">Iyalẹta</div><div class="time-range">10:00 AM — 12:00 PM · 2 hours</div></div>
+    <div class="time-card"><div class="time-period">Ọsan</div><div class="time-range">12:00 PM — 1:00 PM · 1 hour</div></div>
+    <div class="time-card"><div class="time-period">Ọsan Gangan</div><div class="time-range">1:00 PM — 4:00 PM · 3 hours</div></div>
+    <div class="time-card"><div class="time-period">Irọlẹ</div><div class="time-range">4:00 PM — 5:00 PM · 1 hour</div></div>
+    <div class="time-card"><div class="time-period">Asalẹ</div><div class="time-range">5:00 PM — 7:00 PM · 2 hours</div></div>
+    <div class="time-card"><div class="time-period">Alẹ</div><div class="time-range">7:00 PM — 12:00 AM · 5 hours</div></div>
+    <div class="time-card"><div class="time-period">Oru</div><div class="time-range">12:00 AM — 1:00 AM · 1 hour</div></div>
+    <div class="time-card"><div class="time-period">Oganjo</div><div class="time-range">1:00 AM — 2:00 AM · 1 hour</div></div>
+    <div class="time-card"><div class="time-period">Ajin</div><div class="time-range">2:00 AM — 4:00 AM · 2 hours</div></div>
+    <div class="time-card"><div class="time-period">Afẹmoju</div><div class="time-range">4:00 AM — 6:00 AM · 2 hours</div></div>
+  </div>
+</div>
+<div class="rule"></div>
+
+<!-- ══════════════════════════════════════════
+     06 YEAR COUNT
+══════════════════════════════════════════ -->
+<div id="yearcount"></div>
+<div class="doc-section reveal">
+  <div class="section-label">06 — Year Count & Historical Claims</div>
+  <h2>10,000+ Years — What the Claim Means</h2>
+  <p>The Kójódá calendar counts Yoruba civilisation at over 10,000 years old. As of June 3, 2026 CE, Yoruba Year 10,068 began. The Dundun Centre press release and the Kójódá practical listing for April 2026 give slightly different figures — 10,068 and 10,067 respectively — but this reflects a boundary moment: 10,067 was the year that ended June 2, and 10,068 opened June 3. Not a contradiction.</p>
+
+  <div class="discrepancy-block note">
+    <div class="discrepancy-label">[Inference] — Historical Claim Context</div>
+    <p>The infographic states 1958 = Yoruba Year 10,000, placing Year 1 at approximately 8,042 BCE. Current peer-reviewed archaeology does not date complex Yoruba cultural settlement to 8,042 BCE, though Ile-Ife's sacred geography and oral tradition encoded in Ifá place the origin of humanity there within Yoruba cosmology. This is civilizational dating rooted in cosmological tradition — the same category as Hebrew dating from Genesis or Chinese dating from the Yellow Emperor. It does not need to match Western archaeological consensus to be valid within its own epistemic framework.</p>
+  </div>
+
+  <div class="compare-wrap">
+    <table>
+      <thead><tr><th>Calendar System</th><th>Year Count (2026 CE)</th><th>Origin Point</th></tr></thead>
+      <tbody>
+        <tr><td>Yoruba · Kójódá</td><td class="yoruba-col">10,068</td><td>Yoruba civilizational origin</td></tr>
+        <tr><td>Gregorian</td><td>2026</td><td>Birth of Jesus Christ</td></tr>
+        <tr><td>Hebrew</td><td>5786</td><td>Creation of the Earth (Genesis)</td></tr>
+        <tr><td>Islamic / Hijri</td><td>1447–1448 AH</td><td>Muhammad's migration, Mecca to Medina (622 CE)</td></tr>
+        <tr><td>Chinese</td><td>~4723–4724</td><td>Birth of the mythical Yellow Emperor</td></tr>
+        <tr><td>Coptic</td><td>~1742</td><td>Year of the Martyrs (Diocletian, 284 CE)</td></tr>
+        <tr><td>Japanese · Reiwa</td><td>Reiwa 8</td><td>Ascension of Emperor Naruhito (2019 CE)</td></tr>
+        <tr><td>Ethiopian</td><td>~2018</td><td>Alternate computation of Christ's birth</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="rule"></div>
+
+<!-- ══════════════════════════════════════════
+     07 WORLD CALENDARS
+══════════════════════════════════════════ -->
+<div id="world"></div>
+<div class="doc-section reveal">
+  <div class="section-label">07 — Global Context</div>
+  <h2>Kójódá Among the World's Calendars</h2>
+  <p>Every major civilisation counts time from its own origin point. The Gregorian calendar's dominance is political and commercial — not evidence that other systems are less sophisticated. The Kójódá shares structural features with calendars from cultures that have never been in contact with Yoruba civilisation: the Ethiopian calendar also runs 13 months; the Coptic also has a small remainder month; the Hebrew also anchors to a cosmological creation moment.</p>
+  <div class="world-grid">
+    <div class="world-card"><div class="world-name">Yoruba · Kójódá</div><div class="world-year">10,068</div><div class="world-desc">Cultural. 13 months. 364 days. 4-day Òrìṣà week. New Year in early June. Actively practiced across Nigeria, Benin Republic, and the diaspora.</div></div>
+    <div class="world-card"><div class="world-name">Gregorian</div><div class="world-year">2026 CE</div><div class="world-desc">Solar. 12 months. 365/366 days. Introduced 1582 by Pope Gregory XIII. Currently the world's dominant civil calendar.</div></div>
+    <div class="world-card"><div class="world-name">Hebrew</div><div class="world-year">5786</div><div class="world-desc">Lunisolar. Dates from the Earth's creation per Book of Genesis. Used for Jewish religious observance worldwide.</div></div>
+    <div class="world-card"><div class="world-name">Islamic / Hijri</div><div class="world-year">1447–1448 AH</div><div class="world-desc">Lunar. 12 months. ~354 days. Dates from Muhammad's migration from Mecca to Medina, 622 CE.</div></div>
+    <div class="world-card"><div class="world-name">Chinese</div><div class="world-year">~4723–4724</div><div class="world-desc">Lunisolar. Dates from the mythical Yellow Emperor. Basis for Chinese New Year and traditional festivals.</div></div>
+    <div class="world-card"><div class="world-name">Ethiopian</div><div class="world-year">~2018</div><div class="world-desc">Solar. 13 months — same structure as Kójódá in that respect. Currently ~7–8 years behind Gregorian.</div></div>
+    <div class="world-card"><div class="world-name">Coptic</div><div class="world-year">~1742</div><div class="world-desc">Solar. 12 months of 30 days + 1 small month (5–6 days). Dates from the Year of the Martyrs (Diocletian, 284 CE).</div></div>
+    <div class="world-card"><div class="world-name">Japanese · Reiwa</div><div class="world-year">Reiwa 8</div><div class="world-desc">Regnal. Counts the years of the Emperor's reign. Reiwa era began when Naruhito ascended the throne in 2019 CE.</div></div>
+  </div>
+</div>
+<div class="rule"></div>
+
+<!-- ══════════════════════════════════════════
+     08 CULTURAL FUNCTION
+══════════════════════════════════════════ -->
+<div id="function"></div>
+<div class="doc-section reveal">
+  <div class="section-label">08 — Cultural Function</div>
+  <h2>What the Calendar Actually Does</h2>
+  <div class="compare-wrap">
+    <table>
+      <thead><tr><th>Function</th><th>Kójódá</th><th>Gregorian</th></tr></thead>
+      <tbody>
+        <tr><td>Agriculture</td><td class="yoruba-col">Month names map planting, farming, harvest, and rest cycles directly</td><td>General seasons by month; no embedded agricultural intent</td></tr>
+        <tr><td>Spiritual observance</td><td class="yoruba-col">Every day is assigned to an Òrìṣà — worship is structurally embedded</td><td>Religious observances (Sunday, Sabbath) overlaid separately by faith</td></tr>
+        <tr><td>Festivals</td><td class="yoruba-col">Ọdún Ifá Àgbáyé, Ọdún Àgbọn Ọ̀sàrà, and others determined by Kójódá dates</td><td>Christmas, Easter, etc. set by Church/civil authority on fixed solar dates</td></tr>
+        <tr><td>Identity</td><td class="yoruba-col">Affirms Yoruba civilizational continuity across 52M+ people on the continent and diaspora</td><td>Neutral civil function; carries colonial distribution history</td></tr>
+        <tr><td>Community</td><td class="yoruba-col">4-day market cycle structures trade, community gathering, and social rhythms</td><td>7-day work/rest cycle structures modern industrial labour</td></tr>
+        <tr><td>New Year character</td><td class="yoruba-col">Renewal, thanksgiving, Ifá divination for the year ahead, pilgrimage to sacred sites in Ilé-Ifẹ̀</td><td>Civil celebration; no embedded spiritual protocol by default</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="rule"></div>
+
+<!-- ══════════════════════════════════════════
+     09 OPEN QUESTIONS
+══════════════════════════════════════════ -->
+<div id="openqs"></div>
+<div class="doc-section reveal">
+  <div class="section-label">09 — Unresolved Questions</div>
+  <h2>What This Documentation Cannot Yet Answer</h2>
+  <p>Good documentation names its gaps. These require primary Babaláwo consultation or specialist scholarship to resolve.</p>
+  <div class="compare-wrap">
+    <table>
+      <thead><tr><th>Question</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>How does Kójódá handle the ~1.25-day annual shortfall relative to the solar year?</td><td class="flag">[Cannot verify] — no intercalation mechanism found in any provided source</td></tr>
+        <tr><td>Is the calendar lunar, solar, or purely cyclical in its astronomical basis?</td><td class="flag">[Unverified] — described as "lunar" in one source; no astronomical basis specified</td></tr>
+        <tr><td>How many weeks per month — 4 or 7?</td><td class="flag">[Conflict] — infographic says 4, Dundun Centre says 7; both produce 28-day months</td></tr>
+        <tr><td>Which day opens the 4-day week — Ọbàtálá or Ṣàngó?</td><td class="flag">[Conflict] — infographic and press release say Ọbàtálá; practical Kójódá listing starts with Jàkúta/Ṣàngó</td></tr>
+        <tr><td>What is the exact historical or cosmological event marking Year 1?</td><td class="flag">[Unverified] — stated as Yoruba civilizational origin; no primary source or text identified</td></tr>
+        <tr><td>How does the New Year date (~June 3) stay fixed if the year is only 364 days?</td><td class="flag">[Cannot verify] — a 364-day year drifts ~1.25 days annually against the solar year without correction</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="rule"></div>
+
+<!-- ══════════════════════════════════════════
+     10 FULL YEAR CALENDAR
+══════════════════════════════════════════ -->
+<div id="full-year">
+  <div class="doc-section" style="padding-bottom:0;">
+    <div class="section-label">10 — Full Year Calendar</div>
+    <h2>Kójódá Year 10,068 — All 364 Days</h2>
+    <p>Every month, every week, every day rendered. Four columns — one per Òrìṣà. Seven weeks per month. Thirteen months. Use the month navigation to jump to any month in the year.</p>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="cal-legend">
+    <div class="cal-legend-item l-jakuta">
+      <div class="leg-name"><span class="leg-dot"></span>Day 1 — Ṣàngó / Jàkúta</div>
+      <div class="leg-orisa">ṢÀNGÓ · ỌYA · AGANJÚ · YEMỌJA · ÌBEJÌ · NÀNÁ-BÙKÚÙ</div>
+    </div>
+    <div class="cal-legend-item l-obatala">
+      <div class="leg-name"><span class="leg-dot"></span>Day 2 — Ọbàtálá</div>
+      <div class="leg-orisa">ỌBÀTÁLÁ · ỌBALÚAYÉ · ÒGÌRÌYÀN · EGÚNGÚN · ÌYÀMI ÀJẸ́ · ÒRÌṢÀ ÒKÈ</div>
+    </div>
+    <div class="cal-legend-item l-ifa">
+      <div class="leg-name"><span class="leg-dot"></span>Day 3 — Ifá / Ọ̀rúnmìlà</div>
+      <div class="leg-orisa">IFÁ · ỌṚÚNMÌlÀ · ÈṢÙ · ORÍ · ODÙ · ỌṢUN · ỌṢÀNYÌn · ẸGBẸ́</div>
+    </div>
+    <div class="cal-legend-item l-ogun">
+      <div class="leg-name"><span class="leg-dot"></span>Day 4 — Ògún</div>
+      <div class="leg-orisa">ÒGÚN · ỌṢỌ́Ọ̀SÌ · ERINlẸ̀ · ÒRÌṢÀ OKO · ÌJA</div>
+    </div>
+  </div>
+
+  <!-- MONTH NAV -->
+  <nav class="month-nav">
+    <div class="month-nav-inner" id="monthNav"></div>
+  </nav>
+
+  <!-- CALENDAR RENDER -->
+  <div class="months-wrapper" id="monthsWrapper"></div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer>
+  <p>Documentation compiled from: Kójódá Calendar infographic, Yoruba Times of Day chart, Dundun Centre New Year announcement (June 6, 2026), Kójódá Igbe 2026 monthly listing, and supplementary historical calendar comparisons. <strong>All source conflicts are flagged throughout.</strong></p>
+  <p>Full year calendar anchored to <strong>June 3, 2026 CE = Day 1, Month 1, Yoruba Year 10,068</strong>. Gregorian dates are approximate. Day order follows the Kójódá practical listing (Ṣàngó first). This conflict is documented and unresolved.</p>
+  <p>Prepared for <strong>Farahàn · Yoruba Knowledge Engine</strong> · June 2026</p>
+</footer>
+
+<script>
+  // Top nav scroll
+  function scrollTo(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Highlight top nav on scroll
+  const sections = ['overview','structure','months','week','time','yearcount','world','function','openqs','full-year'];
+  const topBtns = document.querySelectorAll('.top-nav-btn');
+  const sectionEls = sections.map(s => document.getElementById(s));
+
+  window.addEventListener('scroll', () => {
+    let current = 0;
+    sectionEls.forEach((el, i) => {
+      if (el && el.getBoundingClientRect().top < 120) current = i;
+    });
+    topBtns.forEach((b, i) => b.classList.toggle('active', i === current));
+  }, { passive: true });
+
+  // Calendar data
+  const MONTHS = [
+    { num:1,  name:'Ògúnmégé',  meaning:"The Hunter's Month",       greg:'Jun 3 – Jun 30, 2026' },
+    { num:2,  name:'Òrúnmìlà',  meaning:"The Oracle's Month",       greg:'Jul 1 – Jul 28, 2026' },
+    { num:3,  name:'Ògúnmorán', meaning:"The Farmer's Month",        greg:'Jul 29 – Aug 25, 2026' },
+    { num:4,  name:'Òdúdúwà',   meaning:"The Rain Maker's Month",   greg:'Aug 26 – Sep 22, 2026' },
+    { num:5,  name:'Òkéré',     meaning:'The Abundance Month',       greg:'Sep 23 – Oct 20, 2026' },
+    { num:6,  name:'Òséré',     meaning:'The Settlement Month',      greg:'Oct 21 – Nov 17, 2026' },
+    { num:7,  name:'Òsè',       meaning:'The Rest Month',            greg:'Nov 18 – Dec 15, 2026' },
+    { num:8,  name:'Ògún',      meaning:'The Iron Month',            greg:'Dec 16, 2026 – Jan 12, 2027' },
+    { num:9,  name:'Òwéwé',     meaning:'The Market Month',          greg:'Jan 13 – Feb 9, 2027' },
+    { num:10, name:'Òná',       meaning:'The Owner Month',           greg:'Feb 10 – Mar 9, 2027' },
+    { num:11, name:'Òjé',       meaning:'The Youth Month',           greg:'Mar 10 – Apr 6, 2027' },
+    { num:12, name:'Òrúdúdé',   meaning:'The Festival Month',        greg:'Apr 7 – May 4, 2027' },
+    { num:13, name:'Ògúnmégé',  meaning:'Back to the Beginning',     greg:'May 5 – Jun 1, 2027' },
+  ];
+
+  const DAYS = [
+    { col:'jakuta',  header:'Ṣàngó · Jàkúta',        orisa:'Ṣàngó · Ọya\nAganjú · Yemọja · Ìbejì' },
+    { col:'obatala', header:'Ọbàtálá · Òrìṣà-ńlá',   orisa:'Ọbàtálá · Egúngún\nỌbalúayé · Ìyàmi Àjẹ́' },
+    { col:'ifa',     header:'Ifá · Ọ̀rúnmìlà',        orisa:'Ifá · Ọ̀rúnmìlà\nÈṣù · Ọ̀ṣun · Orí' },
+    { col:'ogun',    header:'Ògún',                    orisa:'Ògún · Ọ̀ṣọ́ọ̀sì\nErinlẹ̀ · Òrìṣà Oko' },
+  ];
+
+  // Build month nav
+  const nav = document.getElementById('monthNav');
+  MONTHS.forEach((m, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'nav-btn' + (i === 0 ? ' active' : '');
+    btn.textContent = `${String(m.num).padStart(2,'0')} ${m.name}`;
+    btn.dataset.idx = i;
+    btn.onclick = () => {
+      document.querySelector('.month-block[data-idx="'+i+'"]')
+        .scrollIntoView({ behavior:'smooth', block:'start' });
+    };
+    nav.appendChild(btn);
+  });
+
+  // Build one month
+  function buildMonth(m, idx) {
+    const block = document.createElement('div');
+    block.className = 'month-block';
+    block.dataset.idx = idx;
+
+    block.innerHTML = `
+      <div class="month-header">
+        <div>
+          <div class="month-num-label">Month ${String(m.num).padStart(2,'0')} of 13</div>
+          <div class="month-title">${m.name}</div>
+          <div class="month-meaning-text">${m.meaning}</div>
+        </div>
+        <div class="month-meta">
+          <span class="month-meta-days">28</span>
+          <span class="month-meta-label">Days · 7 Weeks</span>
+          <span class="month-meta-greg">${m.greg}</span>
+        </div>
+      </div>
+    `;
+
+    const table = document.createElement('table');
+    table.className = 'cal';
+
+    const thead = document.createElement('thead');
+    const hrow = document.createElement('tr');
+    DAYS.forEach(d => {
+      const th = document.createElement('th');
+      th.className = `col-${d.col}`;
+      th.innerHTML = d.header.replace(' · ', '<br>');
+      hrow.appendChild(th);
+    });
+    thead.appendChild(hrow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    for (let w = 0; w < 7; w++) {
+      const sep = document.createElement('tr');
+      sep.className = 'week-row-label';
+      const std = document.createElement('td');
+      std.colSpan = 4;
+      std.textContent = `Ọsẹ ${w+1} — Week ${w+1} of 7`;
+      sep.appendChild(std);
+      tbody.appendChild(sep);
+
+      const row = document.createElement('tr');
+      for (let d = 0; d < 4; d++) {
+        const dayNum = w * 4 + d + 1;
+        const dt = DAYS[d];
+        const td = document.createElement('td');
+        td.className = `day-cell type-${dt.col}`;
+        td.innerHTML = `<div class="day-inner">
+          <div class="day-num">${dayNum}</div>
+          <div class="day-orisa-short">${dt.orisa.replace(/\n/g,'<br>')}</div>
+        </div>`;
+        row.appendChild(td);
+      }
+      tbody.appendChild(row);
+    }
+    table.appendChild(tbody);
+    block.appendChild(table);
+    return block;
+  }
+
+  // Render all months
+  const wrapper = document.getElementById('monthsWrapper');
+  MONTHS.forEach((m, i) => wrapper.appendChild(buildMonth(m, i)));
+
+  // Scroll reveal — doc sections
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.06 });
+  revealEls.forEach(r => revealObs.observe(r));
+
+  // Scroll reveal — month blocks
+  const monthObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.04 });
+  document.querySelectorAll('.month-block').forEach(b => monthObs.observe(b));
+
+  // Month nav highlight
+  const monthBlocks = document.querySelectorAll('.month-block');
+  const navBtns = document.querySelectorAll('.nav-btn');
+  const navObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = e.target.dataset.idx;
+        navBtns.forEach(b => b.classList.remove('active'));
+        const active = document.querySelector(`.nav-btn[data-idx="${idx}"]`);
+        if (active) {
+          active.classList.add('active');
+          active.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+        }
+      }
+    });
+  }, { threshold: 0.25 });
+  monthBlocks.forEach(b => navObs.observe(b));
+</script>
+</body>
+</html>

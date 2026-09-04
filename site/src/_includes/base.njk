@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ title or "Ọ̀NÀ" }} — Ọ̀NÀ</title>
+<meta name="description" content="{{ description or 'Ọ̀NÀ — Yoruba words, proverbs, Ifá/Odù, and culture.' }}">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<header class="top-nav">
+  <a class="brand" href="/">Ọ̀NÀ</a>
+  <nav>
+    <a href="/pillars/linguistic-purity/">Èdè</a>
+    <a href="/pillars/natural-science/">Ẹ̀dá Alààyè</a>
+    <a href="/pillars/applied-ethics/">Ìwà &amp; Ifá</a>
+    <a href="/pillars/identity-genealogy/">Ìdánimọ̀</a>
+    <a href="/pillars/philosophy-cosmology/">Ìmọ̀ Ẹ̀dá</a>
+    <a href="/entries/">Gbogbo Àkọsílẹ̀</a>
+    <a href="/quiz/">Nje O Mọ</a>
+    <a href="/search/">Wá</a>
+  </nav>
+</header>
+
+<main>
+{{ content | safe }}
+</main>
+
+<footer class="site-footer">
+  <p>Ọ̀NÀ — a Yoruba language &amp; culture archive. Entries marked <span class="badge unverified">unverified</span> or <span class="badge disputed">disputed</span> are shown honestly, not hidden — help us verify them.</p>
+  <p><a href="https://t.me/OnaYorubaBot" target="_blank" rel="noopener">@OnaYorubaBot on Telegram</a></p>
+</footer>
+</body>
+</html>

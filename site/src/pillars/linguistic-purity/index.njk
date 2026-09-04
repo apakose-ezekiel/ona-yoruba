@@ -1,0 +1,14 @@
+---
+layout: base.njk
+title: Èdè Mímọ́ — Linguistic Purity
+pillarKey: linguistic_purity
+---
+{% from "entry-card.njk" import card %}
+<h2>Èdè Mímọ́ — Linguistic Purity</h2>
+<p>Words, grammar, and vocabulary — the building blocks of the language.</p>
+<div class="entry-grid">
+  {% for e in entries | where("pillar", pillarKey) | limit(60) %}
+    {{ card(e) }}
+  {% endfor %}
+</div>
+<p><a href="/entries/?pillar=linguistic_purity">See all {{ entries | where("pillar", pillarKey) | length }} →</a></p>

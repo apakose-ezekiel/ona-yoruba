@@ -1,0 +1,46 @@
+---
+layout: base.njk
+title: Home
+description: "Ọ̀NÀ — Yoruba words, proverbs, Ifá/Odù, and culture, verified and unverified content clearly marked."
+---
+<section class="hero">
+  <p class="hero-eyebrow">Ọ̀NÀ · The Path</p>
+  <h1>Ọ̀rọ̀, Òwe àti Àṣà Yorùbá</h1>
+  <p class="lede">Words, proverbs, Ifá/Odù, and culture — {{ entries.length }} entries, fieldwork-verified and web-researched content marked honestly, side by side.</p>
+</section>
+
+<section>
+  <h2>Àwọn Ọ̀wọ́n Márùn-ún — Five Pillars</h2>
+  <div class="pillar-grid">
+    <a class="pillar-card" href="/pillars/linguistic-purity/">
+      <h3>Èdè Mímọ́</h3>
+      <p>Linguistic Purity — words, grammar, vocabulary</p>
+      <div class="count">{{ entries | where("pillar", "linguistic_purity") | length }} entries</div>
+    </a>
+    <a class="pillar-card" href="/pillars/natural-science/">
+      <h3>Ẹ̀dá Alààyè</h3>
+      <p>Natural Science — plants, botany, the natural world</p>
+      <div class="count">{{ entries | where("pillar", "natural_science") | length }} entries</div>
+    </a>
+    <a class="pillar-card" href="/pillars/applied-ethics/">
+      <h3>Ìwà àti Ifá</h3>
+      <p>Applied Ethics — Ifá, Òrìṣà, moral philosophy</p>
+      <div class="count">{{ entries | where("pillar", "applied_ethics") | length }} entries</div>
+    </a>
+    <a class="pillar-card" href="/pillars/identity-genealogy/">
+      <h3>Ìdánimọ̀ àti Ìran</h3>
+      <p>Identity &amp; Genealogy — oríkì, royal titles, history</p>
+      <div class="count">{{ entries | where("pillar", "identity_genealogy") | length }} entries</div>
+    </a>
+    <a class="pillar-card" href="/pillars/philosophy-cosmology/">
+      <h3>Ìmọ̀ Ẹ̀dá àti Àgbáyé</h3>
+      <p>Philosophy &amp; Cosmology — proverbs, the Kójódá calendar, discourse</p>
+      <div class="count">{{ entries | where("pillar", "philosophy_cosmology") | length }} entries</div>
+    </a>
+    <a class="pillar-card" href="/quiz/">
+      <h3>Nje O Mọ?</h3>
+      <p>Did You Know — the quiz bank, playable here and on the Telegram bot</p>
+      <div class="count">{{ entries | where("domain", "njeomo") | length }} questions</div>
+    </a>
+  </div>
+</section>

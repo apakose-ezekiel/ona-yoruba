@@ -1,0 +1,15 @@
+---
+layout: base.njk
+title: Ẹ̀dá Alààyè — Natural Science
+pillarKey: natural_science
+---
+{% from "entry-card.njk" import card %}
+<h2>Ẹ̀dá Alààyè — Natural Science</h2>
+<p>Plants, animals, and the natural world in Yoruba knowledge. This pillar is still thin — most botanical (ewé) content is pending fieldwork/gap-fill.</p>
+<div class="entry-grid">
+  {% for e in entries | where("pillar", pillarKey) | limit(60) %}
+    {{ card(e) }}
+  {% endfor %}
+</div>
+{% set count = entries | where("pillar", pillarKey) | length %}
+{% if count == 0 %}<p><em>No entries tagged to this pillar yet.</em></p>{% endif %}

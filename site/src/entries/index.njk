@@ -1,0 +1,88 @@
+---
+layout: base.njk
+title: Gbogbo Àkọsílẹ̀ — All Entries
+---
+<h2>Gbogbo Àkọsílẹ̀ — All Entries</h2>
+<p>{{ entries.length }} entries. Filter by domain, or use <a href="/search/">search</a> for full-text.</p>
+
+<div class="filters" id="domain-filters">
+  <button data-domain="" class="active">All</button>
+  <button data-domain="owe">Òwe (Proverbs)</button>
+  <button data-domain="vocab">Ọ̀rọ̀ (Vocabulary)</button>
+  <button data-domain="ifa">Ifá</button>
+  <button data-domain="orisa">Òrìṣà</button>
+  <button data-domain="oriki">Oríkì</button>
+  <button data-domain="aroko">Àrokò</button>
+  <button data-domain="ethics">Ìwà</button>
+  <button data-domain="discourse">Discourse</button>
+  <button data-domain="njeomo">Nje O Mọ</button>
+</div>
+
+<div class="entry-grid" id="entry-list"></div>
+<p id="load-more-wrap" style="text-align:center; margin-top:24px;">
+  <button id="load-more" class="filters">Load more</button>
+</p>
+
+<script id="entries-data" type="application/json">{{ entries | json | safe }}</script>
+<script>
+(function () {
+  const data = JSON.parse(document.getElementById("entries-data").textContent);
+  const badgeMap = {
+    verified_multi_source: ["Verified (multi-source)", "verified"],
+    verified_single_source: ["Sourced", "verified"],
+    fieldwork_verified: ["Fieldwork verified", "verified"],
+    fieldwork_partial: ["Fieldwork (partial)", "partial"],
+    ai_generated_unverified: ["AI research — unverified", "unverified"],
+    web_sourced_pending_verification: ["Community-sourced — unverified", "unverified"],
+    disputed: ["Disputed sources", "disputed"],
+    unverified: ["Unverified", "unverified"],
+  };
+
+  const list = document.getElementById("entry-list");
+  const loadMoreBtn = document.getElementById("load-more");
+  const PAGE_SIZE = 60;
+  let filtered = data;
+  let shown = 0;
+
+  function cardHtml(e) {
+    const b = badgeMap[e.verify_status] || [e.verify_status, "unverified"];
+    return (
+      '<div class="entry-card">' +
+      (e.yoruba ? '<div class="yoruba">' + e.yoruba + "</div>" : "") +
+      (e.english ? '<div class="english">' + e.english + "</div>" : "") +
+      (e.drop_english ? "<p>" + e.drop_english + "</p>" : "") +
+      '<div class="meta"><span class="badge ' + b[1] + '">' + b[0] + "</span><span>" +
+      e.domain + (e.category ? " · " + e.category : "") + "</span></div></div>"
+    );
+  }
+
+  function render(reset) {
+    if (reset) { list.innerHTML = ""; shown = 0; }
+    const next = filtered.slice(shown, shown + PAGE_SIZE);
+    list.insertAdjacentHTML("beforeend", next.map(cardHtml).join(""));
+    shown += next.length;
+    loadMoreBtn.style.display = shown >= filtered.length ? "none" : "inline-block";
+  }
+
+  function applyDomain(domain) {
+    filtered = domain ? data.filter((e) => e.domain === domain) : data;
+    render(true);
+  }
+
+  document.getElementById("domain-filters").addEventListener("click", (ev) => {
+    if (ev.target.tagName !== "BUTTON") return;
+    document.querySelectorAll("#domain-filters button").forEach((b) => b.classList.remove("active"));
+    ev.target.classList.add("active");
+    applyDomain(ev.target.dataset.domain);
+  });
+
+  loadMoreBtn.addEventListener("click", () => render(false));
+
+  const params = new URLSearchParams(location.search);
+  const initialPillar = params.get("pillar");
+  if (initialPillar) {
+    filtered = data.filter((e) => e.pillar === initialPillar);
+  }
+  render(true);
+})();
+</script>

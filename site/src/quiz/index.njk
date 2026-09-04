@@ -1,0 +1,55 @@
+---
+layout: base.njk
+title: Nje O Mọ — Quiz
+---
+{% set quiz = entries | where("domain", "njeomo") %}
+<h2>Nje O Mọ? — Did You Know</h2>
+<p>{{ quiz.length }} questions from the fieldwork quiz bank. Same question set as the Telegram bot's <code>/quiz</code> command.</p>
+
+<div class="quiz-card" id="quiz-card">
+  <div class="question" id="q-yoruba"></div>
+  <div class="question" id="q-english" style="font-size:16px; font-style:italic; color:var(--cream-dark);"></div>
+  <button class="reveal" id="reveal-btn">Fi ìdáhùn hàn — Reveal answer</button>
+  <div class="answer" id="answer">
+    <div id="a-yoruba"></div>
+    <div id="a-english" style="font-style:italic; color:var(--cream-dark);"></div>
+  </div>
+</div>
+<div class="quiz-nav">
+  <button class="reveal" id="prev-btn">← Ìṣáájú</button>
+  <span id="progress" style="font-family:'Space Mono',monospace; font-size:12px;"></span>
+  <button class="reveal" id="next-btn">Tókàn →</button>
+</div>
+
+<script id="quiz-data" type="application/json">{{ quiz | json | safe }}</script>
+<script>
+(function () {
+  const data = JSON.parse(document.getElementById("quiz-data").textContent);
+  let i = 0;
+  const shuffled = data.slice().sort(() => Math.random() - 0.5);
+
+  function render() {
+    const e = shuffled[i];
+    document.getElementById("q-yoruba").textContent = e.yoruba || "";
+    document.getElementById("q-english").textContent = e.question_english || e.english || "";
+    document.getElementById("a-yoruba").textContent = e.drop_text || "";
+    document.getElementById("a-english").textContent = e.drop_english || "";
+    document.getElementById("answer").classList.remove("show");
+    document.getElementById("progress").textContent = (i + 1) + " / " + shuffled.length;
+  }
+
+  document.getElementById("reveal-btn").addEventListener("click", () => {
+    document.getElementById("answer").classList.toggle("show");
+  });
+  document.getElementById("next-btn").addEventListener("click", () => {
+    i = (i + 1) % shuffled.length;
+    render();
+  });
+  document.getElementById("prev-btn").addEventListener("click", () => {
+    i = (i - 1 + shuffled.length) % shuffled.length;
+    render();
+  });
+
+  if (shuffled.length) render();
+})();
+</script>

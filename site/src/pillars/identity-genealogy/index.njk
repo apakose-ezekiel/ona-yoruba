@@ -1,0 +1,14 @@
+---
+layout: base.njk
+title: Ìdánimọ̀ àti Ìran — Identity & Genealogy
+pillarKey: identity_genealogy
+---
+{% from "entry-card.njk" import card %}
+<h2>Ìdánimọ̀ àti Ìran — Identity &amp; Genealogy</h2>
+<p>Oríkì (praise poetry), royal titles, and the history of family and community.</p>
+<div class="entry-grid">
+  {% for e in entries | where("pillar", pillarKey) | limit(60) %}
+    {{ card(e) }}
+  {% endfor %}
+</div>
+<p><a href="/entries/?pillar=identity_genealogy">See all {{ entries | where("pillar", pillarKey) | length }} →</a></p>

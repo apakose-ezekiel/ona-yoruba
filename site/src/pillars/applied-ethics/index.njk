@@ -1,0 +1,14 @@
+---
+layout: base.njk
+title: Ìwà àti Ifá — Applied Ethics
+pillarKey: applied_ethics
+---
+{% from "entry-card.njk" import card %}
+<h2>Ìwà àti Ifá — Applied Ethics</h2>
+<p>Ifá, Òrìṣà, and the moral philosophy encoded in the Odù. Some Odù entries below are community-sourced gap-fill research, clearly flagged — treat them as a starting point, not the final word.</p>
+<div class="entry-grid">
+  {% for e in entries | where("pillar", pillarKey) | limit(60) %}
+    {{ card(e) }}
+  {% endfor %}
+</div>
+<p><a href="/entries/?pillar=applied_ethics">See all {{ entries | where("pillar", pillarKey) | length }} →</a></p>

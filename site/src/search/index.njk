@@ -1,0 +1,65 @@
+---
+layout: base.njk
+title: Wá — Search
+---
+<h2>Wá — Search</h2>
+<p>Full-text search across Yoruba and English text, live against the database (not limited to the last build).</p>
+<input type="search" id="search-box" placeholder="Wá ọ̀rọ̀, òwe, tàbí Odù... (search words, proverbs, or Odù)">
+<div class="entry-grid" id="results"></div>
+
+<script>
+(function () {
+  const SUPABASE_URL = "{{ site.supabaseUrl }}";
+  const SUPABASE_ANON_KEY = "{{ site.supabaseAnonKey }}";
+  const badgeMap = {
+    verified_multi_source: ["Verified (multi-source)", "verified"],
+    verified_single_source: ["Sourced", "verified"],
+    fieldwork_verified: ["Fieldwork verified", "verified"],
+    fieldwork_partial: ["Fieldwork (partial)", "partial"],
+    ai_generated_unverified: ["AI research — unverified", "unverified"],
+    web_sourced_pending_verification: ["Community-sourced — unverified", "unverified"],
+    disputed: ["Disputed sources", "disputed"],
+    unverified: ["Unverified", "unverified"],
+  };
+
+  function cardHtml(e) {
+    const b = badgeMap[e.verify_status] || [e.verify_status, "unverified"];
+    return (
+      '<div class="entry-card">' +
+      (e.yoruba ? '<div class="yoruba">' + e.yoruba + "</div>" : "") +
+      (e.english ? '<div class="english">' + e.english + "</div>" : "") +
+      (e.drop_english ? "<p>" + e.drop_english + "</p>" : "") +
+      '<div class="meta"><span class="badge ' + b[1] + '">' + b[0] + "</span><span>" +
+      e.domain + (e.category ? " · " + e.category : "") + "</span></div></div>"
+    );
+  }
+
+  let timer;
+  const box = document.getElementById("search-box");
+  const results = document.getElementById("results");
+
+  box.addEventListener("input", () => {
+    clearTimeout(timer);
+    const term = box.value.trim();
+    if (term.length < 2) { results.innerHTML = ""; return; }
+    timer = setTimeout(() => runSearch(term), 300);
+  });
+
+  async function runSearch(term) {
+    const query = term.split(/\s+/).join(" & ");
+    const url = SUPABASE_URL + "/rest/v1/entries?select=*&search_vector=fts." + encodeURIComponent(query) + "&limit=50";
+    try {
+      const res = await fetch(url, {
+        headers: { apikey: SUPABASE_ANON_KEY, Authorization: "Bearer " + SUPABASE_ANON_KEY },
+      });
+      if (!res.ok) throw new Error(await res.text());
+      const rows = await res.json();
+      results.innerHTML = rows.length
+        ? rows.map(cardHtml).join("")
+        : "<p>Kò sí àbájáde. No results.</p>";
+    } catch (err) {
+      results.innerHTML = "<p>Search unavailable right now.</p>";
+    }
+  }
+})();
+</script>
