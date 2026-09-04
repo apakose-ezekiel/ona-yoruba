@@ -1,0 +1,14 @@
+services:
+  - type: worker
+    name: ona-yoruba-bot
+    env: python
+    plan: free
+    buildCommand: pip install -r bot/requirements.txt
+    startCommand: python bot/bot.py
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
