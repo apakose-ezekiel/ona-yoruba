@@ -122,6 +122,50 @@ main {
 }
 .lede-block { font-size: 20px; font-style: italic; color: var(--cream-dark); max-width: 720px; }
 
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 28px; }
+.game-cta .cta-row { justify-content: flex-start; }
+.btn {
+  display: inline-block;
+  font-family: "Space Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  color: var(--cream);
+  background: transparent;
+}
+.btn:hover { text-decoration: none; border-color: var(--ochre-light); background: rgba(200,134,10,0.1); }
+.btn-primary { background: var(--ochre); color: var(--earth); border-color: var(--ochre); font-weight: bold; }
+.btn-primary:hover { background: var(--ochre-light); }
+.btn.small { padding: 8px 14px; font-size: 11px; }
+
+.game-cta {
+  margin-top: 48px;
+  padding: 32px;
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--earth2), var(--green-deep));
+}
+.game-cta-inner { display: flex; gap: 32px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+.game-cta-text { flex: 2; min-width: 260px; }
+.game-cta-text h2 { margin-top: 8px; }
+.sample-question {
+  flex: 1;
+  min-width: 220px;
+  background: var(--earth);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+}
+.sample-label { font-family: "Space Mono", monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ochre); margin-bottom: 10px; }
+.sample-q { font-size: 17px; margin-bottom: 14px; overflow-wrap: break-word; }
+
+@media (max-width: 480px) {
+  .cta-row, .game-cta .cta-row { justify-content: center; }
+  .game-cta { padding: 20px; }
+}
+
 /* ---------------- GRIDS / CARDS ---------------- */
 .pillar-grid, .entry-grid {
   display: grid;

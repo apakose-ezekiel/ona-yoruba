@@ -6,7 +6,35 @@ description: "Ọ̀NÀ — Yoruba words, proverbs, Ifá/Odù, and culture, verif
 <section class="hero">
   <p class="hero-eyebrow">Ọ̀NÀ · The Path</p>
   <h1>Ọ̀rọ̀, Òwe àti Àṣà Yorùbá</h1>
-  <p class="lede">Words, proverbs, Ifá/Odù, and culture — {{ entries.length }} entries, fieldwork-verified and web-researched content marked honestly, side by side.</p>
+  <p class="lede">Ọ̀NÀ is a living archive of Yoruba words, proverbs, Ifá/Odù, and culture — {{ entries.length }} entries, fieldwork-verified and web-researched content marked honestly, side by side. Explore below, test what you know, or dig into the full archive.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="/entries/">Wo Gbogbo Àkọsílẹ̀ — Browse Entries</a>
+    <a class="btn" href="/quiz/">Bẹ̀rẹ̀ Quiz — Test Yourself</a>
+    <a class="btn" href="/about/">Nípa Wa — About</a>
+  </div>
+</section>
+
+{% set sample = entries | where("domain", "njeomo") | limit(1) %}
+<section class="game-cta">
+  <div class="game-cta-inner">
+    <div class="game-cta-text">
+      <p class="hero-eyebrow">Nje O Mọ? — Did You Know</p>
+      <h2>Ṣe o mọ Yorùbá dáadáa? — Test your knowledge</h2>
+      <p>{{ entries | where("domain", "njeomo") | length }} quiz questions pulled straight from fieldwork records — same set playable here or on the Telegram bot. Got a question of your own, or something to correct? Send it our way.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/quiz/">Ṣeré Quiz — Play the Quiz</a>
+        <a class="btn" href="https://t.me/OnaYorubaBot" target="_blank" rel="noopener">Beere Ìbéèrè — Ask on Telegram</a>
+        <a class="btn" href="https://wa.me/8183879878" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+    {% if sample.length %}
+    <div class="sample-question">
+      <p class="sample-label">Àpẹẹrẹ ìbéèrè — Sample question</p>
+      <p class="sample-q">{{ sample[0].question_english or sample[0].english }}</p>
+      <a class="btn small" href="/quiz/">Fi ìdáhùn hàn →</a>
+    </div>
+    {% endif %}
+  </div>
 </section>
 
 <section>
@@ -37,10 +65,10 @@ description: "Ọ̀NÀ — Yoruba words, proverbs, Ifá/Odù, and culture, verif
       <p>Philosophy &amp; Cosmology — proverbs, the Kójódá calendar, discourse</p>
       <div class="count">{{ entries | where("pillar", "philosophy_cosmology") | length }} entries</div>
     </a>
-    <a class="pillar-card" href="/quiz/">
-      <h3>Nje O Mọ?</h3>
-      <p>Did You Know — the quiz bank, playable here and on the Telegram bot</p>
-      <div class="count">{{ entries | where("domain", "njeomo") | length }} questions</div>
+    <a class="pillar-card" href="/search/">
+      <h3>Wá</h3>
+      <p>Search — full-text search across every Yoruba and English entry</p>
+      <div class="count">live search</div>
     </a>
   </div>
 </section>
