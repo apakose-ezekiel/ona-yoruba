@@ -3,7 +3,7 @@ layout: base.njk
 title: Home
 description: "Ọ̀NÀ — Yoruba words, proverbs, Ifá/Odù, and culture, verified and unverified content clearly marked."
 ---
-<section class="hero">
+<section class="hero animate-in">
   <p class="hero-eyebrow">Ọ̀NÀ · The Path</p>
   <h1>Ọ̀rọ̀, Òwe àti Àṣà Yorùbá</h1>
   <p class="lede">Ọ̀NÀ is a living archive of Yoruba words, proverbs, Ifá/Odù, and culture — {{ entries.length }} entries, fieldwork-verified and web-researched content marked honestly, side by side. Explore below, test what you know, or dig into the full archive.</p>
@@ -14,17 +14,18 @@ description: "Ọ̀NÀ — Yoruba words, proverbs, Ifá/Odù, and culture, verif
   </div>
 </section>
 
+<div class="band band-alt animate-in d1">
 {% set sample = entries | where("domain", "njeomo") | limit(1) %}
 <section class="game-cta">
   <div class="game-cta-inner">
     <div class="game-cta-text">
-      <p class="hero-eyebrow">Nje O Mọ? — Did You Know</p>
+      <span class="section-eyebrow">Nje O Mọ? — Did You Know</span>
       <h2>Ṣe o mọ Yorùbá dáadáa? — Test your knowledge</h2>
-      <p>{{ entries | where("domain", "njeomo") | length }} quiz questions pulled straight from fieldwork records — same set playable here or on the Telegram bot. Got a question of your own, or something to correct? Send it our way.</p>
+      <p>{{ entries | where("domain", "njeomo") | length }} quiz questions pulled straight from fieldwork records — same set playable here or on the Telegram bot. Got a question of your own, or something to correct? Send it our way, here or on Telegram.</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="/quiz/">Ṣeré Quiz — Play the Quiz</a>
-        <a class="btn" href="https://t.me/OnaYorubaBot" target="_blank" rel="noopener">Beere Ìbéèrè — Ask on Telegram</a>
-        <a class="btn" href="https://wa.me/8183879878" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn" href="/search/">Beere Ìbéèrè — Ask via Search</a>
+        <a class="btn" href="https://t.me/OnaYorubaBot" target="_blank" rel="noopener">@OnaYorubaBot</a>
       </div>
     </div>
     {% if sample.length %}
@@ -36,8 +37,10 @@ description: "Ọ̀NÀ — Yoruba words, proverbs, Ifá/Odù, and culture, verif
     {% endif %}
   </div>
 </section>
+</div>
 
-<section>
+<section class="animate-in d2">
+  <span class="section-eyebrow">Explore by pillar</span>
   <h2>Àwọn Ọ̀wọ́n Márùn-ún — Five Pillars</h2>
   <div class="pillar-grid">
     <a class="pillar-card" href="/pillars/linguistic-purity/">
