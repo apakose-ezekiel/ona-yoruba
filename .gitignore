@@ -1,0 +1,25 @@
+# Raw source material (large PDFs/photos, kept local only)
+/sources/
+
+# Pipeline intermediates (regenerable from sources/ + scripts/)
+/data/*.json
+/data/*.csv
+
+# Secrets
+.env
+.env.*
+*.key
+
+# Node / site build
+site/node_modules/
+site/_site/
+site/.cache/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db
