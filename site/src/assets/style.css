@@ -381,6 +381,74 @@ input[type="search"]::placeholder, input[type="text"]::placeholder { color: var(
 .about-list li { margin-bottom: var(--sp-2); padding-left: 4px; }
 .about-list .badge { margin-right: 10px; }
 
+/* ---------------- ADMIN ---------------- */
+.admin-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: var(--sp-2);
+  margin-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.admin-section { margin-top: var(--sp-4); }
+.admin-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.admin-row-main { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; flex: 1; min-width: 200px; }
+.admin-row-sub { color: var(--cream-dark); font-size: 14px; flex-basis: 100%; }
+.btn.danger { border-color: var(--disputed); color: var(--disputed); }
+.btn.danger:hover { background: rgba(224, 122, 122, 0.15); }
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--sp-4) 16px;
+  overflow-y: auto;
+  z-index: 200;
+}
+.edit-modal {
+  background: var(--earth2);
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  padding: var(--sp-4);
+  max-width: 640px;
+  width: 100%;
+  box-shadow: var(--shadow);
+}
+.edit-modal h2 { margin-bottom: var(--sp-2); }
+#edit-form label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--cream-dark);
+  margin-top: var(--sp-2);
+}
+#edit-form input, #edit-form select, #edit-form textarea {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 9px 12px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  background: var(--earth);
+  border: 1px solid var(--border-strong);
+  border-radius: 7px;
+  color: var(--cream);
+}
+.edit-actions { display: flex; gap: 10px; margin-top: var(--sp-3); flex-wrap: wrap; }
+#edit-status { margin-top: var(--sp-2); font-size: 13px; color: var(--cream-dark); }
+
 /* ---------------- FOOTER ---------------- */
 .site-footer {
   border-top: 1px solid var(--border);

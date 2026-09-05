@@ -1,0 +1,344 @@
+---
+layout: base.njk
+title: Admin — Ọ̀NÀ
+description: "Admin panel for editing Ọ̀NÀ entries."
+---
+<h1>Ilé-iṣẹ́ Alábòójútó — Admin</h1>
+
+<div id="login-screen">
+  <p>Sign in with your GitHub account to add, edit, or remove entries. Changes here update the same database the site and Telegram bot both read from.</p>
+  <button class="btn btn-primary" id="login-btn">Sign in with GitHub</button>
+</div>
+
+<div id="denied-screen" hidden>
+  <p>Signed in as <span id="denied-user"></span>, but this account isn't authorized to edit Ọ̀NÀ. <a href="#" id="logout-link-denied">Sign out</a></p>
+</div>
+
+<div id="admin-panel" hidden>
+  <div class="admin-topbar">
+    <span>Signed in as <strong id="admin-user"></strong></span>
+    <a href="#" id="logout-link">Sign out</a>
+  </div>
+
+  <section class="admin-section">
+    <h2>Fi Àkọsílẹ̀ Kún — Add New Entry</h2>
+    <button class="btn btn-primary" id="new-entry-btn">+ New Entry</button>
+  </section>
+
+  <section class="admin-section">
+    <h2>Wá àti Ṣàtúnṣe — Search &amp; Edit</h2>
+    <input type="search" id="admin-search" placeholder="Search by Yoruba, English, or legacy ID...">
+    <div class="filters" id="admin-domain-filters"></div>
+    <div id="admin-results"></div>
+    <p id="admin-loading">Loading…</p>
+    <button class="btn small" id="load-more-btn" hidden>Load more</button>
+  </section>
+</div>
+
+<div id="edit-overlay" class="overlay" hidden>
+  <div class="edit-modal">
+    <h2 id="edit-title">Edit Entry</h2>
+    <form id="edit-form">
+      <input type="hidden" id="f-id">
+      <label>Legacy ID <input type="text" id="f-legacy_id"></label>
+      <label>Domain
+        <select id="f-domain">
+          <option value="owe">owe (proverbs)</option>
+          <option value="vocab">vocab</option>
+          <option value="njeomo">njeomo (quiz)</option>
+          <option value="aroko">aroko</option>
+          <option value="ifa">ifa</option>
+          <option value="discourse">discourse</option>
+          <option value="ethics">ethics</option>
+          <option value="orisa">orisa</option>
+          <option value="spirit">spirit</option>
+          <option value="interview">interview</option>
+          <option value="family">family</option>
+          <option value="gov">gov</option>
+          <option value="oriki">oriki</option>
+        </select>
+      </label>
+      <label>Type
+        <select id="f-type">
+          <option value="proverb">proverb</option>
+          <option value="vocabulary">vocabulary</option>
+          <option value="knowledge_drop">knowledge_drop</option>
+          <option value="concept">concept</option>
+          <option value="royal_title">royal_title</option>
+          <option value="history">history</option>
+          <option value="deity">deity</option>
+          <option value="odu">odu</option>
+          <option value="ese_ifa">ese_ifa</option>
+          <option value="attributes">attributes</option>
+          <option value="fieldwork_note">fieldwork_note</option>
+          <option value="interview_excerpt">interview_excerpt</option>
+          <option value="symbolic_message">symbolic_message</option>
+          <option value="oriki">oriki</option>
+        </select>
+      </label>
+      <label>Category <input type="text" id="f-category"></label>
+      <label>Pillar
+        <select id="f-pillar">
+          <option value="">(none)</option>
+          <option value="linguistic_purity">linguistic_purity</option>
+          <option value="natural_science">natural_science</option>
+          <option value="applied_ethics">applied_ethics</option>
+          <option value="identity_genealogy">identity_genealogy</option>
+          <option value="philosophy_cosmology">philosophy_cosmology</option>
+        </select>
+      </label>
+      <label>Yoruba <textarea id="f-yoruba" rows="2"></textarea></label>
+      <label>Yoruba (alt) <textarea id="f-yoruba_alt" rows="2"></textarea></label>
+      <label>English <textarea id="f-english" rows="2"></textarea></label>
+      <label>Question (Yoruba) <textarea id="f-question" rows="2"></textarea></label>
+      <label>Question (English) <textarea id="f-question_english" rows="2"></textarea></label>
+      <label>Explanation (Yoruba) <textarea id="f-drop_text" rows="3"></textarea></label>
+      <label>Explanation (English) <textarea id="f-drop_english" rows="3"></textarea></label>
+      <label>Difficulty
+        <select id="f-difficulty">
+          <option value="">(none)</option>
+          <option value="easy">easy</option>
+          <option value="medium">medium</option>
+          <option value="hard">hard</option>
+        </select>
+      </label>
+      <label>Source citation <input type="text" id="f-source_citation"></label>
+      <label>Tags (comma-separated) <input type="text" id="f-tags"></label>
+      <label>Verify status
+        <select id="f-verify_status">
+          <option value="unverified">unverified</option>
+          <option value="verified_single_source">verified_single_source</option>
+          <option value="verified_multi_source">verified_multi_source</option>
+          <option value="fieldwork_verified">fieldwork_verified</option>
+          <option value="fieldwork_partial">fieldwork_partial</option>
+          <option value="ai_generated_unverified">ai_generated_unverified</option>
+          <option value="web_sourced_pending_verification">web_sourced_pending_verification</option>
+          <option value="disputed">disputed</option>
+        </select>
+      </label>
+      <label>Content origin
+        <select id="f-content_origin">
+          <option value="published_source">published_source</option>
+          <option value="own_material">own_material</option>
+          <option value="fieldwork_verified">fieldwork_verified</option>
+          <option value="ai_research">ai_research</option>
+          <option value="web_sourced_new">web_sourced_new</option>
+        </select>
+      </label>
+      <div class="edit-actions">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn" id="cancel-edit-btn">Cancel</button>
+        <button type="button" class="btn danger" id="delete-btn" hidden>Delete</button>
+      </div>
+      <p id="edit-status"></p>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+(function () {
+  const SUPABASE_URL = "{{ site.supabaseUrl }}";
+  const SUPABASE_ANON_KEY = "{{ site.supabaseAnonKey }}";
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const ADMIN_GITHUB_USERNAME = "apakose-ezekiel";
+  const ADMIN_EMAIL = "apakosee@gmail.com";
+
+  const loginScreen = document.getElementById("login-screen");
+  const deniedScreen = document.getElementById("denied-screen");
+  const adminPanel = document.getElementById("admin-panel");
+  const DOMAINS = ["owe","vocab","njeomo","aroko","ifa","discourse","ethics","orisa","spirit","interview","family","gov","oriki"];
+
+  document.getElementById("login-btn").addEventListener("click", async () => {
+    await sb.auth.signInWithOAuth({ provider: "github", options: { redirectTo: window.location.href } });
+  });
+  document.getElementById("logout-link").addEventListener("click", async (e) => { e.preventDefault(); await sb.auth.signOut(); location.reload(); });
+  document.getElementById("logout-link-denied").addEventListener("click", async (e) => { e.preventDefault(); await sb.auth.signOut(); location.reload(); });
+
+  function isAdmin(user) {
+    if (!user) return false;
+    const uname = (user.user_metadata && (user.user_metadata.user_name || user.user_metadata.preferred_username)) || "";
+    return uname === ADMIN_GITHUB_USERNAME || user.email === ADMIN_EMAIL;
+  }
+
+  let currentDomain = "";
+  let searchTerm = "";
+  let offset = 0;
+  const PAGE_SIZE = 40;
+
+  function buildFilters() {
+    const wrap = document.getElementById("admin-domain-filters");
+    wrap.innerHTML = '<button data-domain="" class="active">All</button>' +
+      DOMAINS.map((d) => `<button data-domain="${d}">${d}</button>`).join("");
+    wrap.addEventListener("click", (e) => {
+      if (e.target.tagName !== "BUTTON") return;
+      wrap.querySelectorAll("button").forEach((b) => b.classList.remove("active"));
+      e.target.classList.add("active");
+      currentDomain = e.target.dataset.domain;
+      offset = 0;
+      loadEntries(true);
+    });
+  }
+
+  function rowHtml(e) {
+    return `<div class="admin-row" data-id="${e.id}">
+      <div class="admin-row-main">
+        <strong>${e.yoruba || e.category || e.legacy_id || "(untitled)"}</strong>
+        <span class="pill small">${e.domain}</span>
+        <span class="pill small">${e.verify_status}</span>
+      </div>
+      <div class="admin-row-sub">${(e.english || e.drop_english || "").slice(0, 100)}</div>
+      <button class="btn small edit-btn" data-id="${e.id}">Edit</button>
+    </div>`;
+  }
+
+  async function loadEntries(reset) {
+    document.getElementById("admin-loading").hidden = false;
+    let query = sb.from("entries").select("*").order("id", { ascending: false }).range(offset, offset + PAGE_SIZE - 1);
+    if (currentDomain) query = query.eq("domain", currentDomain);
+    if (searchTerm) query = query.or(`yoruba.ilike.%${searchTerm}%,english.ilike.%${searchTerm}%,legacy_id.ilike.%${searchTerm}%`);
+    const { data, error } = await query;
+    document.getElementById("admin-loading").hidden = true;
+    const results = document.getElementById("admin-results");
+    if (error) { results.innerHTML = "<p>Error loading entries.</p>"; return; }
+    if (reset) results.innerHTML = "";
+    results.insertAdjacentHTML("beforeend", data.map(rowHtml).join(""));
+    document.getElementById("load-more-btn").hidden = data.length < PAGE_SIZE;
+    window._entryCache = window._entryCache || {};
+    data.forEach((e) => (window._entryCache[e.id] = e));
+  }
+
+  document.getElementById("admin-search").addEventListener("input", (e) => {
+    clearTimeout(window._searchTimer);
+    window._searchTimer = setTimeout(() => {
+      searchTerm = e.target.value.trim();
+      offset = 0;
+      loadEntries(true);
+    }, 350);
+  });
+  document.getElementById("load-more-btn").addEventListener("click", () => {
+    offset += PAGE_SIZE;
+    loadEntries(false);
+  });
+  document.getElementById("admin-results").addEventListener("click", (e) => {
+    const btn = e.target.closest(".edit-btn");
+    if (!btn) return;
+    openEdit(window._entryCache[btn.dataset.id]);
+  });
+
+  const overlay = document.getElementById("edit-overlay");
+  const form = document.getElementById("edit-form");
+
+  function openEdit(entry) {
+    entry = entry || {};
+    document.getElementById("edit-title").textContent = entry.id ? "Edit Entry #" + entry.id : "New Entry";
+    document.getElementById("f-id").value = entry.id || "";
+    document.getElementById("f-legacy_id").value = entry.legacy_id || "";
+    document.getElementById("f-domain").value = entry.domain || "owe";
+    document.getElementById("f-type").value = entry.type || "proverb";
+    document.getElementById("f-category").value = entry.category || "";
+    document.getElementById("f-pillar").value = entry.pillar || "";
+    document.getElementById("f-yoruba").value = entry.yoruba || "";
+    document.getElementById("f-yoruba_alt").value = entry.yoruba_alt || "";
+    document.getElementById("f-english").value = entry.english || "";
+    document.getElementById("f-question").value = entry.question || "";
+    document.getElementById("f-question_english").value = entry.question_english || "";
+    document.getElementById("f-drop_text").value = entry.drop_text || "";
+    document.getElementById("f-drop_english").value = entry.drop_english || "";
+    document.getElementById("f-difficulty").value = entry.difficulty || "";
+    document.getElementById("f-source_citation").value = entry.source_citation || "";
+    document.getElementById("f-tags").value = (entry.tags || []).join(", ");
+    document.getElementById("f-verify_status").value = entry.verify_status || "unverified";
+    document.getElementById("f-content_origin").value = entry.content_origin || "published_source";
+    document.getElementById("delete-btn").hidden = !entry.id;
+    document.getElementById("edit-status").textContent = "";
+    overlay.hidden = false;
+  }
+
+  document.getElementById("new-entry-btn").addEventListener("click", () => openEdit(null));
+  document.getElementById("cancel-edit-btn").addEventListener("click", () => (overlay.hidden = true));
+
+  function readForm() {
+    const tags = document.getElementById("f-tags").value.split(",").map((t) => t.trim()).filter(Boolean);
+    const val = (id) => document.getElementById(id).value.trim() || null;
+    return {
+      legacy_id: val("f-legacy_id"),
+      domain: val("f-domain"),
+      type: val("f-type"),
+      category: val("f-category"),
+      pillar: val("f-pillar"),
+      yoruba: val("f-yoruba"),
+      yoruba_alt: val("f-yoruba_alt"),
+      english: val("f-english"),
+      question: val("f-question"),
+      question_english: val("f-question_english"),
+      drop_text: val("f-drop_text"),
+      drop_english: val("f-drop_english"),
+      difficulty: val("f-difficulty"),
+      source_citation: val("f-source_citation"),
+      tags,
+      verify_status: val("f-verify_status"),
+      content_origin: val("f-content_origin"),
+    };
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const status = document.getElementById("edit-status");
+    status.textContent = "Saving…";
+    const id = document.getElementById("f-id").value;
+    const payload = readForm();
+    let result;
+    if (id) {
+      result = await sb.from("entries").update(payload).eq("id", id);
+    } else {
+      result = await sb.from("entries").insert(payload);
+    }
+    if (result.error) {
+      status.textContent = "Error: " + result.error.message;
+      return;
+    }
+    status.textContent = "Saved.";
+    overlay.hidden = true;
+    offset = 0;
+    loadEntries(true);
+  });
+
+  document.getElementById("delete-btn").addEventListener("click", async () => {
+    const id = document.getElementById("f-id").value;
+    if (!id) return;
+    if (!confirm("Delete this entry permanently?")) return;
+    const result = await sb.from("entries").delete().eq("id", id);
+    if (result.error) {
+      document.getElementById("edit-status").textContent = "Error: " + result.error.message;
+      return;
+    }
+    overlay.hidden = true;
+    offset = 0;
+    loadEntries(true);
+  });
+
+  async function init() {
+    const { data: { session } } = await sb.auth.getSession();
+    const user = session && session.user;
+    if (!user) {
+      loginScreen.hidden = false;
+      return;
+    }
+    if (!isAdmin(user)) {
+      loginScreen.hidden = true;
+      deniedScreen.hidden = false;
+      document.getElementById("denied-user").textContent = user.email || user.user_metadata.user_name || "unknown";
+      return;
+    }
+    loginScreen.hidden = true;
+    adminPanel.hidden = false;
+    document.getElementById("admin-user").textContent = user.user_metadata.user_name || user.email;
+    buildFilters();
+    loadEntries(true);
+  }
+
+  init();
+})();
+</script>
