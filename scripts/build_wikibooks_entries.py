@@ -13,9 +13,16 @@ CITATION = "Wikibooks contributors, Yoruba/{page} (CC BY-SA), en.wikibooks.org"
 entries = []
 
 
+from collections import defaultdict
+
+_counters = defaultdict(int)
+
+
 def add(category, yoruba, english, pillar="linguistic_purity", page="Numbers"):
+    _counters[page] += 1
     entries.append(
         {
+            "legacy_id": f"WIKI-{page.upper().replace(' ', '')}-{_counters[page]:04d}",
             "domain": "vocab",
             "type": "vocabulary",
             "category": category,
@@ -40,14 +47,31 @@ NUMBERS = [
     ("1", "Oókan"), ("2", "Eéjì"), ("3", "Ẹẹ́ta"), ("4", "Ẹẹ́rin"), ("5", "Aárùn-ún"),
     ("6", "Ẹẹ́fà"), ("7", "Eéje"), ("8", "Ẹẹ́jọ"), ("9", "Ẹẹ́sàán"), ("10", "Ẹẹ́wàá"),
     ("11", "Ọọ́kànlá"), ("12", "Eéjìlá"), ("13", "Ẹẹ́tàlá"), ("14", "Ẹ́rìnlá"),
-    ("15", "Márùndínlógún"), ("16", "Ẹ́rìndínlógún"), ("17", "Ẹ́tàdínlógún"),
+    ("15", "Márùndínlógún/Mẹ́ẹ̀ẹ́dógún"), ("16", "Ẹ́rìndínlógún"), ("17", "Ẹ́tàdínlógún"),
     ("18", "Éjìdínlógún"), ("19", "Ọ́kàndínlógún"), ("20", "Ogún"),
-    ("21", "Ọ́kànlélógún"), ("30", "Ọgbọ̀n"), ("40", "Ogójì"), ("50", "Àádọ́ta"),
+    ("21", "Ọ́kànlélógún"), ("22", "Méjìlélógún"), ("23", "Mẹ́tàlélógún"),
+    ("24", "Mẹ́rìnlélógún"), ("25", "Márùndínlọ́gbọ̀n"), ("26", "Mẹ́rìndínlọ́gbọ̀n"),
+    ("27", "Mẹ́tàdínlọ́gbọ̀n"), ("28", "Méjìdínlọ́gbọ̀n"), ("29", "Ọ̀kándínlọ́gbọ̀n"),
+    ("30", "Ọgbọ̀n"), ("40", "Ogójì"), ("50", "Àádọ́ta"),
     ("60", "Ọgọ́ta"), ("70", "Àádọ́rin"), ("80", "Ọgọ́rin"), ("90", "Àádọ́rùn-ún"),
-    ("100", "Ọgọ́rùn-ún"), ("200", "Igba"), ("300", "Ọ̀ọ́dúnrún"), ("400", "Irinwó"),
-    ("500", "Ẹ̀ẹ́dẹ́gbẹ̀ta"), ("1,000", "Ẹgbẹ̀rún"), ("2,000", "Ẹgbàá"),
-    ("10,000", "Ẹgbààrún"), ("20,000", "Ọ̀kẹ́"), ("100,000", "Ọ̀kẹ́ márùn-ún"),
-    ("1,000,000", "Àádọ́ta ọ̀kẹ́"),
+    ("100", "Ọgọ́rùn-ún"), ("101", "Ọ́kàn lé lọ́gọ́rùn-ún"), ("102", "Méjì lé lọ́gọ́rùn-ún"),
+    ("103", "Mẹ́tà lé lọ́gọ́rùn-ún"), ("104", "Mẹ́rìn lé lọ́gọ́rùn-ún"),
+    ("105", "Márùn dín láàádọ́fà"), ("110", "Àádọ́fà"), ("120", "Ọgọ́fà"),
+    ("130", "Àádọ́je"), ("140", "Ọgọ́je"), ("150", "Àádọ́jọ"), ("160", "Ọgọ́jọ"),
+    ("170", "Àádọ́sàn-án"), ("180", "Ọgọ́sàn-án"), ("190", "Àádọ́wàá"),
+    ("200", "Igba"), ("300", "Ọ̀ọ́dúnrún"), ("400", "Irinwó"),
+    ("500", "Ẹ̀ẹ́dẹ́gbẹ̀ta"), ("600", "Ẹgbẹ̀ta"), ("700", "Ẹ̀ẹ́dẹ́gbẹ̀rin"),
+    ("800", "Ẹgbẹ̀rin"), ("900", "Ẹ̀ẹ́dẹ́gbẹ̀rún"), ("1,000", "Ẹgbẹ̀rún"),
+    ("2,000", "Ẹgbẹ̀wá/Ẹgbàá"), ("2,500", "Ẹ̀ẹ́dẹ́gbẹ̀tàlá"), ("3,000", "Ẹgbẹ̀ẹ̀ẹ́dógún"),
+    ("4,000", "Ẹgbààjì"), ("5,000", "Ẹ̀ẹ́dẹ́gbàta"), ("6,000", "Ẹgbàáta"),
+    ("7,000", "Ẹ̀ẹ́dẹ́gbàrin"), ("8,000", "Ẹgbàárin"), ("9,000", "Ẹ̀ẹ́dẹ́gbàrún"),
+    ("10,000", "Ẹgbààrún"), ("20,000", "Ọ̀kẹ́"), ("50,000", "Ọ̀kẹ́ méjì àti ààbọ̀"),
+    ("100,000", "Ọ̀kẹ́ márùn-ún"), ("1,000,000", "Àádọ́ta ọ̀kẹ́ / egberun egberun / egbelegbe"),
+    ("10,000,000", "egbelegbe mewaa"), ("100,000,000", "egbelegbe ogorun"),
+    ("1,000,000,000", "egbelegbéji"), ("10,000,000,000", "egbelegbéta"),
+    ("100,000,000,000", "egbelegbérin"), ("1,000,000,000,000", "egbelegbarun"),
+    ("10,000,000,000,000", "egbelegbéfà"), ("100,000,000,000,000", "egbelegbèje"),
+    ("1,000,000,000,000,000", "egbelegbéjo"),
 ]
 for num, yor in NUMBERS:
     add("numbers", yor, num, page="Numbers")
