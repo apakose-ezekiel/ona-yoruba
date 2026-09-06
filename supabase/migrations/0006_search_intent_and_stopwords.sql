@@ -41,7 +41,8 @@ declare
     -- Yoruba function/filler + corpus-ubiquitous words
     'yoruba','ile','ni','ti','to','wa','abe','won','ki','ati','si','fun',
     'bi','pe','kan','se','ma','kini','tani','nibo','bawo','wo','ha','na',
-    'gbogbo','pelu','ninu','lati','lori','ile-yoruba','o',
+    'gbogbo','pelu','ninu','lati','lori','ile-yoruba','o','itumo','itumọ̀',
+    'tumo','tumọ̀',
     -- English conversational/question-frame filler -- NOT topic words
     'what','does','do','this','that','these','those','mean','meaning',
     'tell','me','about','who','is','are','a','an','the','please','can',
