@@ -11,4 +11,4 @@ pillarKey: identity_genealogy
     {{ card(e) }}
   {% endfor %}
 </div>
-<p><a href="/entries/?pillar=identity_genealogy">See all {{ entries | where("pillar", pillarKey) | length }} →</a></p>
+<p><a href="{{ '/entries/?pillar=identity_genealogy' | url }}">See all {{ entries | where("pillar", pillarKey) | length }} →</a></p>

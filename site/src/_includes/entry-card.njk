@@ -1,6 +1,6 @@
 {% macro card(e) %}
 {% set b = e.verify_status | badge %}
-<a class="entry-card" href="/entry/{{ e.legacy_id }}/">
+<a class="entry-card" href="{{ ('/entry/' + e.legacy_id + '/') | url }}">
   {% if e.yoruba %}<div class="yoruba">{{ e.yoruba }}</div>{% endif %}
   {% if e.english %}<div class="english">{{ e.english }}</div>{% endif %}
   {% if e.drop_english %}<p>{{ e.drop_english }}</p>{% endif %}

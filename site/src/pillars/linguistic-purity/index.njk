@@ -11,4 +11,4 @@ pillarKey: linguistic_purity
     {{ card(e) }}
   {% endfor %}
 </div>
-<p><a href="/entries/?pillar=linguistic_purity">See all {{ entries | where("pillar", pillarKey) | length }} →</a></p>
+<p><a href="{{ '/entries/?pillar=linguistic_purity' | url }}">See all {{ entries | where("pillar", pillarKey) | length }} →</a></p>

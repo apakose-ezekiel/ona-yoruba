@@ -8,9 +8,9 @@ description: "Ọ̀NÀ — Yoruba words, proverbs, Ifá/Odù, and culture, verif
   <h1>Ọ̀rọ̀, Òwe àti Àṣà Yorùbá</h1>
   <p class="lede">Ọ̀NÀ is a living archive of Yoruba words, proverbs, Ifá/Odù, and culture — {{ entries.length }} entries, fieldwork-verified and web-researched content marked honestly, side by side. Explore below, test what you know, or dig into the full archive.</p>
   <div class="cta-row">
-    <a class="btn btn-primary" href="/entries/">Wo Gbogbo Àkọsílẹ̀ — Browse Entries</a>
-    <a class="btn" href="/quiz/">Bẹ̀rẹ̀ Quiz — Test Yourself</a>
-    <a class="btn" href="/about/">Nípa Wa — About</a>
+    <a class="btn btn-primary" href="{{ '/entries/' | url }}">Wo Gbogbo Àkọsílẹ̀ — Browse Entries</a>
+    <a class="btn" href="{{ '/quiz/' | url }}">Bẹ̀rẹ̀ Quiz — Test Yourself</a>
+    <a class="btn" href="{{ '/about/' | url }}">Nípa Wa — About</a>
   </div>
 </section>
 
@@ -23,8 +23,8 @@ description: "Ọ̀NÀ — Yoruba words, proverbs, Ifá/Odù, and culture, verif
       <h2>Ṣe o mọ Yorùbá dáadáa? — Test your knowledge</h2>
       <p>{{ entries | where("domain", "njeomo") | length }} quiz questions pulled straight from fieldwork records — same set playable here or on the Telegram bot. Got a question of your own, or something to correct? Send it our way, here or on Telegram.</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="/quiz/">Ṣeré Quiz — Play the Quiz</a>
-        <a class="btn" href="/search/">Beere Ìbéèrè — Ask via Search</a>
+        <a class="btn btn-primary" href="{{ '/quiz/' | url }}">Ṣeré Quiz — Play the Quiz</a>
+        <a class="btn" href="{{ '/search/' | url }}">Beere Ìbéèrè — Ask via Search</a>
         <a class="btn" href="https://t.me/OnaYorubaBot" target="_blank" rel="noopener">@OnaYorubaBot</a>
       </div>
     </div>
@@ -32,7 +32,7 @@ description: "Ọ̀NÀ — Yoruba words, proverbs, Ifá/Odù, and culture, verif
     <div class="sample-question">
       <p class="sample-label">Àpẹẹrẹ ìbéèrè — Sample question</p>
       <p class="sample-q">{{ sample[0].question_english or sample[0].english }}</p>
-      <a class="btn small" href="/quiz/">Fi ìdáhùn hàn →</a>
+      <a class="btn small" href="{{ '/quiz/' | url }}">Fi ìdáhùn hàn →</a>
     </div>
     {% endif %}
   </div>
@@ -43,32 +43,32 @@ description: "Ọ̀NÀ — Yoruba words, proverbs, Ifá/Odù, and culture, verif
   <span class="section-eyebrow">Explore by pillar</span>
   <h2>Àwọn Ọ̀wọ́n Márùn-ún — Five Pillars</h2>
   <div class="pillar-grid">
-    <a class="pillar-card" href="/pillars/linguistic-purity/">
+    <a class="pillar-card" href="{{ '/pillars/linguistic-purity/' | url }}">
       <h3>Èdè Mímọ́</h3>
       <p>Linguistic Purity — words, grammar, vocabulary</p>
       <div class="count">{{ entries | where("pillar", "linguistic_purity") | length }} entries</div>
     </a>
-    <a class="pillar-card" href="/pillars/natural-science/">
+    <a class="pillar-card" href="{{ '/pillars/natural-science/' | url }}">
       <h3>Ẹ̀dá Alààyè</h3>
       <p>Natural Science — plants, botany, the natural world</p>
       <div class="count">{{ entries | where("pillar", "natural_science") | length }} entries</div>
     </a>
-    <a class="pillar-card" href="/pillars/applied-ethics/">
+    <a class="pillar-card" href="{{ '/pillars/applied-ethics/' | url }}">
       <h3>Ìwà àti Ifá</h3>
       <p>Applied Ethics — Ifá, Òrìṣà, moral philosophy</p>
       <div class="count">{{ entries | where("pillar", "applied_ethics") | length }} entries</div>
     </a>
-    <a class="pillar-card" href="/pillars/identity-genealogy/">
+    <a class="pillar-card" href="{{ '/pillars/identity-genealogy/' | url }}">
       <h3>Ìdánimọ̀ àti Ìran</h3>
       <p>Identity &amp; Genealogy — oríkì, royal titles, history</p>
       <div class="count">{{ entries | where("pillar", "identity_genealogy") | length }} entries</div>
     </a>
-    <a class="pillar-card" href="/pillars/philosophy-cosmology/">
+    <a class="pillar-card" href="{{ '/pillars/philosophy-cosmology/' | url }}">
       <h3>Ìmọ̀ Ẹ̀dá àti Àgbáyé</h3>
       <p>Philosophy &amp; Cosmology — proverbs, the Kójódá calendar, discourse</p>
       <div class="count">{{ entries | where("pillar", "philosophy_cosmology") | length }} entries</div>
     </a>
-    <a class="pillar-card" href="/search/">
+    <a class="pillar-card" href="{{ '/search/' | url }}">
       <h3>Wá</h3>
       <p>Search — full-text search across every Yoruba and English entry</p>
       <div class="count">live search</div>

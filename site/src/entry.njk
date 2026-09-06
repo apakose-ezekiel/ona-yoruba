@@ -10,7 +10,7 @@ layout: base.njk
 ---
 {% set b = e.verify_status | badge %}
 <article class="entry-detail">
-  <p class="breadcrumb"><a href="/entries/">← Gbogbo Àkọsílẹ̀</a></p>
+  <p class="breadcrumb"><a href="{{ '/entries/' | url }}">← Gbogbo Àkọsílẹ̀</a></p>
 
   {% if e.yoruba %}<h1>{{ e.yoruba }}</h1>{% endif %}
   {% if e.yoruba_alt and e.yoruba_alt != e.yoruba %}<p class="alt-phrasing">{{ e.yoruba_alt }}</p>{% endif %}
@@ -49,7 +49,7 @@ layout: base.njk
 
   {% if not (e.drop_text or e.drop_english or e.question) %}
   <section class="block">
-    <p class="thin-notice">This entry doesn't have a fuller explanation recorded yet — it's shown here exactly as collected. <a href="/pillars/{{ e.pillar | replace('_','-') }}/">Browse related entries</a> or help expand it via the Telegram bot.</p>
+    <p class="thin-notice">This entry doesn't have a fuller explanation recorded yet — it's shown here exactly as collected. <a href="{{ ('/pillars/' + (e.pillar | replace('_','-')) + '/') | url }}">Browse related entries</a> or help expand it via the Telegram bot.</p>
   </section>
   {% endif %}
 

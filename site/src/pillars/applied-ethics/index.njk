@@ -11,4 +11,4 @@ pillarKey: applied_ethics
     {{ card(e) }}
   {% endfor %}
 </div>
-<p><a href="/entries/?pillar=applied_ethics">See all {{ entries | where("pillar", pillarKey) | length }} →</a></p>
+<p><a href="{{ '/entries/?pillar=applied_ethics' | url }}">See all {{ entries | where("pillar", pillarKey) | length }} →</a></p>

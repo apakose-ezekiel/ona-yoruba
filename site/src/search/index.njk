@@ -11,6 +11,7 @@ title: Wá — Search
 (function () {
   const SUPABASE_URL = "{{ site.supabaseUrl }}";
   const SUPABASE_ANON_KEY = "{{ site.supabaseAnonKey }}";
+  const PATH_PREFIX = "{{ '/' | url }}";
   const badgeMap = {
     verified_multi_source: ["Verified (multi-source)", "verified"],
     verified_single_source: ["Sourced", "verified"],
@@ -25,7 +26,7 @@ title: Wá — Search
   function cardHtml(e) {
     const b = badgeMap[e.verify_status] || [e.verify_status, "unverified"];
     return (
-      '<a class="entry-card" href="/entry/' + encodeURIComponent(e.legacy_id) + '/">' +
+      '<a class="entry-card" href="' + PATH_PREFIX + 'entry/' + encodeURIComponent(e.legacy_id) + '/">' +
       (e.yoruba ? '<div class="yoruba">' + e.yoruba + "</div>" : "") +
       (e.english ? '<div class="english">' + e.english + "</div>" : "") +
       (e.drop_english ? "<p>" + e.drop_english + "</p>" : "") +

@@ -6,10 +6,10 @@ pillarKey: philosophy_cosmology
 {% from "entry-card.njk" import card %}
 <h2>Ìmọ̀ Ẹ̀dá àti Àgbáyé — Philosophy &amp; Cosmology</h2>
 <p>Proverbs (òwe) as folk philosophy, cosmology, and deeper cultural discourse.</p>
-<p><a href="/pillars/philosophy-cosmology/kojoda/">→ Kójódá: the Yoruba 13-month calendar</a></p>
+<p><a href="{{ '/pillars/philosophy-cosmology/kojoda/' | url }}">→ Kójódá: the Yoruba 13-month calendar</a></p>
 <div class="entry-grid">
   {% for e in entries | where("pillar", pillarKey) | limit(60) %}
     {{ card(e) }}
   {% endfor %}
 </div>
-<p><a href="/entries/?pillar=philosophy_cosmology">See all {{ entries | where("pillar", pillarKey) | length }} →</a></p>
+<p><a href="{{ '/entries/?pillar=philosophy_cosmology' | url }}">See all {{ entries | where("pillar", pillarKey) | length }} →</a></p>

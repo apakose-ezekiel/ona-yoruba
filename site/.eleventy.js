@@ -32,6 +32,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("limit", (arr, n) => (arr || []).slice(0, n));
 
   return {
+    pathPrefix: "/ona-yoruba/",
     dir: {
       input: "src",
       output: "_site",

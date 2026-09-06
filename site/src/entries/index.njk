@@ -3,7 +3,7 @@ layout: base.njk
 title: Gbogbo Àkọsílẹ̀ — All Entries
 ---
 <h2>Gbogbo Àkọsílẹ̀ — All Entries</h2>
-<p>{{ entries.length }} entries. Filter by domain, or use <a href="/search/">search</a> for full-text.</p>
+<p>{{ entries.length }} entries. Filter by domain, or use <a href="{{ '/search/' | url }}">search</a> for full-text.</p>
 
 <div class="filters" id="domain-filters">
   <button data-domain="" class="active">All</button>
@@ -26,6 +26,7 @@ title: Gbogbo Àkọsílẹ̀ — All Entries
 <script id="entries-data" type="application/json">{{ entries | json | safe }}</script>
 <script>
 (function () {
+  const PATH_PREFIX = "{{ '/' | url }}";
   const data = JSON.parse(document.getElementById("entries-data").textContent);
   const badgeMap = {
     verified_multi_source: ["Verified (multi-source)", "verified"],
@@ -47,7 +48,7 @@ title: Gbogbo Àkọsílẹ̀ — All Entries
   function cardHtml(e) {
     const b = badgeMap[e.verify_status] || [e.verify_status, "unverified"];
     return (
-      '<a class="entry-card" href="/entry/' + encodeURIComponent(e.legacy_id) + '/">' +
+      '<a class="entry-card" href="' + PATH_PREFIX + 'entry/' + encodeURIComponent(e.legacy_id) + '/">' +
       (e.yoruba ? '<div class="yoruba">' + e.yoruba + "</div>" : "") +
       (e.english ? '<div class="english">' + e.english + "</div>" : "") +
       (e.drop_english ? "<p>" + e.drop_english + "</p>" : "") +
