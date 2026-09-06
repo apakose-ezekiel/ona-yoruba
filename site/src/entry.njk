@@ -5,7 +5,7 @@ pagination:
   alias: e
 permalink: "/entry/{{ e.legacy_id }}/"
 eleventyComputed:
-  title: "{{ (e.category or e.yoruba or e.legacy_id) | truncate(60) }}"
+  title: "{{ (e.yoruba or e.category or e.legacy_id) | truncate(60) }}"
 layout: base.njk
 ---
 {% set b = e.verify_status | badge %}
