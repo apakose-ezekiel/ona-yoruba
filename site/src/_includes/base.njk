@@ -23,16 +23,16 @@
     </button>
   </div>
   <nav id="main-nav">
-    <a href="{{ '/pillars/linguistic-purity/' | url }}">Èdè</a>
-    <a href="{{ '/pillars/natural-science/' | url }}">Ẹ̀dá Alààyè</a>
-    <a href="{{ '/pillars/applied-ethics/' | url }}">Ìwà &amp; Ifá</a>
-    <a href="{{ '/pillars/identity-genealogy/' | url }}">Ìdánimọ̀</a>
-    <a href="{{ '/pillars/philosophy-cosmology/' | url }}">Ìmọ̀ Ẹ̀dá</a>
-    <a href="{{ '/pillars/philosophy-cosmology/kojoda/' | url }}">Kójódá</a>
-    <a href="{{ '/entries/' | url }}">Gbogbo Àkọsílẹ̀</a>
-    <a href="{{ '/quiz/' | url }}">Nje O Mọ</a>
-    <a href="{{ '/search/' | url }}">Wá</a>
-    <a href="{{ '/about/' | url }}">Nípa Wa</a>
+    <a href="{{ '/pillars/linguistic-purity/' | url }}">Èdè <span class="en">Language</span></a>
+    <a href="{{ '/pillars/natural-science/' | url }}">Ẹ̀dá Alààyè <span class="en">Natural Science</span></a>
+    <a href="{{ '/pillars/applied-ethics/' | url }}">Ìwà &amp; Ifá <span class="en">Ethics &amp; Ifá</span></a>
+    <a href="{{ '/pillars/identity-genealogy/' | url }}">Ìdánimọ̀ <span class="en">Identity &amp; Genealogy</span></a>
+    <a href="{{ '/pillars/philosophy-cosmology/' | url }}">Ìmọ̀ Ẹ̀dá <span class="en">Philosophy &amp; Cosmology</span></a>
+    <a href="{{ '/pillars/philosophy-cosmology/kojoda/' | url }}">Kọ́jọ́dá <span class="en">Yoruba Calendar</span></a>
+    <a href="{{ '/entries/' | url }}">Gbogbo Àkọsílẹ̀ <span class="en">All Entries</span></a>
+    <a href="{{ '/quiz/' | url }}">Ńjẹ́ o mọ̀ <span class="en">Did You Know? (Quiz)</span></a>
+    <a href="{{ '/search/' | url }}">Wá <span class="en">Search</span></a>
+    <a href="{{ '/about/' | url }}">Nípa wa <span class="en">About Us</span></a>
   </nav>
 </header>
 
@@ -60,6 +60,13 @@
   toggle.addEventListener("click", function () {
     var open = nav.classList.toggle("open");
     toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  document.querySelectorAll("[data-open-menu]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      nav.classList.add("open");
+      toggle.setAttribute("aria-expanded", "true");
+    });
   });
 })();
 </script>
