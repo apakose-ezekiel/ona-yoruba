@@ -1,0 +1,19 @@
+---
+layout: base.njk
+title: Àwọn Àròkọ — Articles
+---
+<h1>Àwọn Àròkọ — Articles</h1>
+<p class="lede-block">Writing on Yoruba language, culture and knowledge from practitioners and scholars, shared with the authors' permission.</p>
+{% if collections.articles and collections.articles.length %}
+<ul class="article-list">
+  {% for a in collections.articles | reverse %}
+  <li class="article-card">
+    <a href="{{ a.url | url }}"><h2>{{ a.data.title }}</h2></a>
+    <p class="article-meta">By {{ a.data.author }}{% if a.data.date %} · {{ a.date | dateFmt }}{% endif %}</p>
+    {% if a.data.summary %}<p>{{ a.data.summary }}</p>{% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="thin-notice">The first articles are on their way. If you are a Babaláwo, Ìyáláwo, Òrìṣà devotee or a scholar of Yoruba culture and would like to contribute, <a href="mailto:apakosee@gmail.com?subject={{ 'Ọ̀NÀ article contribution' | urlencode }}">write to us</a>.</p>
+{% endif %}
