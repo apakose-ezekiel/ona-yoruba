@@ -29,6 +29,53 @@ module.exports = function (eleventyConfig) {
     (arr || []).filter((item) => item[key] === value)
   );
 
+  // A-Z word list: Yoruba alphabet order (A B D E Ẹ F G GB H I J K L M N O Ọ P R S Ṣ T U W Y)
+  const YO = ["a","b","d","e","ẹ","f","g","gb","h","i","j","k","l","m","n","o","ọ","p","r","s","ṣ","t","u","w","y"];
+  const yoBase = (s) => (s || "").normalize("NFD").replace(/[\u0300\u0301\u0304]/g, "").normalize("NFC").toLowerCase();
+  const yoKey = (s) => {
+    s = yoBase(s).replace(/^[^a-zẹọṣ]+/, "");
+    const out = [];
+    for (let i = 0; i < s.length; i++) {
+      const two = s.slice(i, i + 2);
+      if (two === "gb") { out.push(YO.indexOf("gb")); i++; continue; }
+      const k = YO.indexOf(s[i]);
+      out.push(k === -1 ? 99 : k);
+    }
+    return out;
+  };
+  const yoCmp = (a, b) => {
+    const x = yoKey(a), y = yoKey(b);
+    for (let i = 0; i < Math.max(x.length, y.length); i++) {
+      if ((x[i] ?? -1) !== (y[i] ?? -1)) return (x[i] ?? -1) - (y[i] ?? -1);
+    }
+    return 0;
+  };
+  eleventyConfig.addFilter("azGroups", (arr) => {
+    const kinds = ["vocabulary", "deity", "royal_title", "odu"];
+    const seen = new Set();
+    const words = (arr || []).filter((e) => {
+      if (!kinds.includes(e.type) || !e.yoruba) return false;
+      const k = e.yoruba + "|" + (e.english || "");
+      if (seen.has(k)) return false; // same word with the same meaning listed once
+      seen.add(k);
+      return true;
+    });
+    words.sort((a, b) => yoCmp(a.yoruba, b.yoruba));
+    const groups = [];
+    for (const e of words) {
+      const k = yoKey(e.yoruba)[0];
+      if (k === undefined || k === 99) continue;
+      const letter = YO[k];
+      let g = groups[groups.length - 1];
+      if (!g || g.key !== letter) { g = { key: letter, label: letter.toUpperCase(), items: [] }; groups.push(g); }
+      g.items.push(e);
+    }
+    return groups;
+  });
+  eleventyConfig.addFilter("dateFmt", (d) =>
+    new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })
+  );
+
   eleventyConfig.addFilter("limit", (arr, n) => (arr || []).slice(0, n));
 
   return {
