@@ -1,0 +1,37 @@
+---
+layout: base.njk
+title: Àtòjọ Ọ̀rọ̀ — Word List
+---
+{% set groups = entries | azGroups %}
+<h1>Àtòjọ Ọ̀rọ̀ — Word List A–Z</h1>
+<p class="lede-block">Yoruba words, deity names, royal titles and Odù names in Yoruba alphabet order. Tap a word to open its entry.</p>
+<input id="wl-filter" class="wl-filter" type="search" placeholder="Filter the list — Yoruba or English" aria-label="Filter the word list">
+<nav class="az" aria-label="Jump to letter">
+  {% for g in groups %}<a href="#L-{{ g.key }}">{{ g.label }}</a>{% endfor %}
+</nav>
+{% for g in groups %}
+<section class="wl-group" id="L-{{ g.key }}">
+  <h2>{{ g.label }}</h2>
+  <ul class="wl-list">
+    {% for e in g.items %}
+    <li class="wl-row"><a href="{{ ('/entry/' + e.legacy_id + '/') | url }}"><span class="wl-yo">{{ e.yoruba }}</span>{% if e.english %}<span class="wl-en"> — {{ e.english | truncate(80) }}</span>{% endif %}</a></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endfor %}
+<script>
+(function () {
+  var box = document.getElementById("wl-filter");
+  box.addEventListener("input", function () {
+    var q = box.value.trim().toLowerCase();
+    document.querySelectorAll(".wl-group").forEach(function (g) {
+      var any = false;
+      g.querySelectorAll(".wl-row").forEach(function (r) {
+        var show = !q || r.textContent.toLowerCase().indexOf(q) !== -1;
+        r.style.display = show ? "" : "none"; if (show) any = true;
+      });
+      g.style.display = any ? "" : "none";
+    });
+  });
+})();
+</script>
