@@ -67,4 +67,8 @@ layout: base.njk
     <p class="tags">{% for t in e.tags %}<span class="pill small">{{ t }}</span>{% endfor %}</p>
     {% endif %}
   </section>
+  <p class="report-error">Ṣé o rí àṣìṣe? — Found a mistake in this entry?
+    <a href="mailto:apakosee@gmail.com?subject={{ ('Ọ̀NÀ correction: ' + e.legacy_id) | urlencode }}">Email</a> ·
+    <a href="https://wa.me/8183879878?text={{ ('Ọ̀NÀ correction for ' + e.legacy_id + ': ') | urlencode }}">WhatsApp</a> ·
+    <a href="https://t.me/OnaYorubaBot">Telegram</a></p>
 </article>
