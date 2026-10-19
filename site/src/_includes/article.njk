@@ -1,0 +1,11 @@
+---
+layout: base.njk
+---
+<article class="article">
+  <p class="breadcrumb"><a href="{{ '/articles/' | url }}">← Àwọn Àròkọ</a></p>
+  <h1>{{ title }}</h1>
+  <p class="article-meta">By {{ author }}{% if date %} · {{ date | dateFmt }}{% endif %}</p>
+  <div class="article-body">{{ content | safe }}</div>
+  {% if source_url %}<p class="article-source">Originally published: <a href="{{ source_url }}">{{ source_label or source_url }}</a></p>{% endif %}
+  <p class="thin-notice">Published here with the author's permission.{% if translation_note %} {{ translation_note }}{% endif %}</p>
+</article>
