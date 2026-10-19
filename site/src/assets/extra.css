@@ -1,0 +1,20 @@
+/* ---- A-Z word list ---- */
+.wl-filter { width: 100%; box-sizing: border-box; margin: var(--sp-2) 0; padding: 12px 14px; font: inherit; color: inherit; background: transparent; border: 1px solid var(--cream-dark); border-radius: 10px; }
+.az { display: flex; flex-wrap: wrap; gap: 8px; margin: var(--sp-2) 0 var(--sp-3); }
+.az a { padding: 4px 10px; border: 1px solid var(--cream-dark); border-radius: 8px; text-decoration: none; font-family: var(--font-mono); font-size: 13px; }
+.wl-group h2 { margin: var(--sp-3) 0 var(--sp-1); color: var(--ochre-light); }
+.wl-list { list-style: none; margin: 0; padding: 0; }
+.wl-row a { display: block; padding: 8px 0; border-bottom: 1px solid rgba(205,189,154,0.18); text-decoration: none; }
+.wl-yo { font-weight: 600; }
+.wl-en { opacity: 0.75; }
+
+/* ---- articles ---- */
+.article-list { list-style: none; margin: var(--sp-3) 0; padding: 0; display: grid; gap: var(--sp-2); }
+.article-card { padding: var(--sp-2) var(--sp-3); border: 1px solid rgba(205,189,154,0.25); border-radius: 12px; }
+.article-card h2 { margin: 0 0 4px; }
+.article-meta { opacity: 0.7; font-size: 15px; margin: 4px 0 var(--sp-2); }
+.article-body { max-width: 68ch; line-height: 1.7; }
+.article-source { margin-top: var(--sp-3); }
+
+/* ---- report an error ---- */
+.report-error { margin-top: var(--sp-3); opacity: 0.85; font-size: 15px; }
